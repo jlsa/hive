@@ -61,8 +61,9 @@ public class HiveGame implements IHive {
      */
     @Override
     public void move(int fromQ, int fromR, int toQ, int toR) throws IllegalMove {
-        if (playerHasPlayedQueen(currentPlayer)) {
-            throw new IllegalMove("You first have to play the Queen");
+
+        if (!playerHasPlayedQueen(currentPlayer)) {
+            throw new IllegalMove("You first have to play the queen");
         }
 
         Coord from = new Coord(fromQ, fromR);
