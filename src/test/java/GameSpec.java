@@ -47,7 +47,7 @@ public class GameSpec {
         Player whitePlayer = new Player(IHive.PlayerColor.WHITE);
         Player blackPlayer = new Player(IHive.PlayerColor.BLACK);
         Board board = new Board();
-        Tile tile = new Tile(whitePlayer.getPlayerColor(), IHive.TileType.BEETLE);
+        Tile tile = new Tile(whitePlayer.getPlayerColor(), IHive.TileType.QUEEN_BEE);
         Coord from = new Coord(0, 0);
         board.placeTile(from, tile);
 
