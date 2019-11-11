@@ -1,0 +1,17 @@
+plugins {
+    id 'java'
+}
+
+group 'josaho.nl'
+version '1.0-SNAPSHOT'
+ext.junitJupiterVersion = "5.1.1"
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile("org.junit.jupiter:junit-jupiter-api:" + junitJupiterVersion)
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:" + junitJupiterVersion)
+}
