@@ -61,7 +61,9 @@ public class HiveGame implements IHive {
      */
     @Override
     public void move(int fromQ, int fromR, int toQ, int toR) throws IllegalMove {
-
+        if (!isTileConnected(new Coord(toQ, toR))) {
+            throw new IllegalMove("Your tile has to be attached to another tile");
+        }
         if (!playerHasPlayedQueen(currentPlayer)) {
             throw new IllegalMove("You first have to play the queen");
         }
@@ -173,6 +175,19 @@ public class HiveGame implements IHive {
                 return true;
             }
         }
+        return false;
+    }
+
+    private boolean isTileConnected(Coord coord) {
+        for (Coord c : coord.getNeighborCoords()) {
+            Field field = board.getFields().get(c);
+            if (field != null) {
+                if (field.getTiles().length > 0) {
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 }
