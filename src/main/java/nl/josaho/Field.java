@@ -6,36 +6,36 @@ import java.util.Stack;
 
 public class Field {
     private Field[] neighbors;
-    private Stack<Tile> tiles;
+    private Stack<Stone> stones;
 
     public Field() {
         neighbors = new Field[6];
-        tiles = new Stack<Tile>();
+        stones = new Stack<Stone>();
     }
 
     public Field[] getNeighbors() {
         return neighbors;
     }
 
-    public Tile[] getTiles() {
-        return this.tiles.toArray(new Tile[this.tiles.size()]);
+    public Stone[] getStones() {
+        return this.stones.toArray(new Stone[this.stones.size()]);
     }
 
-    public void addTile(Tile tile) {
-        if (!this.tiles.contains(tile)) {
-            this.tiles.push(tile);
+    public void addTile(Stone stone) {
+        if (!this.stones.contains(stone)) {
+            this.stones.push(stone);
         }
     }
 
-    public Tile popTile()
+    public Stone popTile()
     {
-        return this.tiles.pop();
+        return this.stones.pop();
     }
 
-    public Tile peekTile() { return this.tiles.peek(); }
+    public Stone peekTile() { return this.stones.peek(); }
 
-    public boolean containsTile(Tile tile) {
-        return this.tiles.contains(tile);
+    public boolean containsTile(Stone stone) {
+        return this.stones.contains(stone);
     }
 
     @Override
@@ -44,12 +44,12 @@ public class Field {
         if (o == null || getClass() != o.getClass()) return false;
         Field field = (Field) o;
         return Arrays.equals(neighbors, field.neighbors) &&
-                Objects.equals(tiles, field.tiles);
+                Objects.equals(stones, field.stones);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(tiles);
+        int result = Objects.hash(stones);
         result = 31 * result + Arrays.hashCode(neighbors);
         return result;
     }

@@ -1,4 +1,4 @@
-import nl.hanze.hive.IHive;
+import nl.hanze.hive.Hive;
 import nl.josaho.*;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -6,50 +6,48 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GameSpec {
     @Test
     void whenGameIsStartedWhiteHasFirstTurn() {
-        Player whitePlayer = new Player(IHive.PlayerColor.WHITE);
+        Player whitePlayer = new Player(Hive.Player.WHITE);
         HiveGame game = new HiveGame(whitePlayer, null);
         assertEquals(whitePlayer, game.currentPlayer);
     }
 
     @Test
-    void whenPlayerHasTurnItCanPlaceATile() throws IHive.IllegalMove {
-        Player whitePlayer = new Player(IHive.PlayerColor.WHITE);
-        Player blackPlayer = new Player(IHive.PlayerColor.BLACK);
+    void whenPlayerHasTurnItCanPlaceATile() throws Hive.IllegalMove {
+        Player whitePlayer = new Player(Hive.Player.WHITE);
+        Player blackPlayer = new Player(Hive.Player.BLACK);
         Board board = new Board();
         HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
 
         Coord coord = new Coord(0, 0);
-        Tile tile = new Tile(whitePlayer.getPlayerColor(), IHive.TileType.BEETLE);
-        game.play(tile, coord.q, coord.r);
+        game.play(Hive.Tile.BEETLE, coord.q, coord.r);
 
         assertEquals(1, game.board.getFields().size()); // I feel this could lead to some errors..
     }
 
     @Test
-    void whenPlayerTriesToPlaceTheSameTileAgainItThrowsAnIllegalMove() throws IHive.IllegalMove {
-        Player whitePlayer = new Player(IHive.PlayerColor.WHITE);
-        Player blackPlayer = new Player(IHive.PlayerColor.BLACK);
+    void whenPlayerTriesToPlaceTheSameTileAgainItThrowsAnIllegalMove() throws Hive.IllegalMove {
+        Player whitePlayer = new Player(Hive.Player.WHITE);
+        Player blackPlayer = new Player(Hive.Player.BLACK);
         Board board = new Board();
         HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
 
         Coord coord = new Coord(0, 0);
-        Tile tile = new Tile(whitePlayer.getPlayerColor(), IHive.TileType.BEETLE);
-        game.play(tile, coord.q, coord.r);
+        game.play(Hive.Tile.BEETLE, coord.q, coord.r);
 
-        assertThrows(IHive.IllegalMove.class, () -> {
-            game.play(tile, coord.q, coord.r);
+        assertThrows(Hive.IllegalMove.class, () -> {
+            game.play(Hive.Tile.BEETLE, coord.q, coord.r);
         });
     }
 
     // 3b.1
     @Test
-    void whenPlayerHasMadeAMadeAMoveSwitchPlayer() throws IHive.IllegalMove {
-        Player whitePlayer = new Player(IHive.PlayerColor.WHITE);
-        Player blackPlayer = new Player(IHive.PlayerColor.BLACK);
+    void whenPlayerHasMadeAMadeAMoveSwitchPlayer() throws Hive.IllegalMove {
+        Player whitePlayer = new Player(Hive.Player.WHITE);
+        Player blackPlayer = new Player(Hive.Player.BLACK);
         Board board = new Board();
-        Tile tile = new Tile(whitePlayer.getPlayerColor(), IHive.TileType.QUEEN_BEE);
+        Stone stone = new Stone(whitePlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE);
         Coord from = new Coord(0, 0);
-        board.placeTile(from, tile);
+        board.placeTile(from, stone);
 
         HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
 
@@ -62,24 +60,23 @@ public class GameSpec {
 
     // 3b.2
     @Test
-    void whenPlayerHasPlacedANewTileSwitchPlayer() throws IHive.IllegalMove {
-        Player whitePlayer = new Player(IHive.PlayerColor.WHITE);
-        Player blackPlayer = new Player(IHive.PlayerColor.BLACK);
+    void whenPlayerHasPlacedANewTileSwitchPlayer() throws Hive.IllegalMove {
+        Player whitePlayer = new Player(Hive.Player.WHITE);
+        Player blackPlayer = new Player(Hive.Player.BLACK);
         Board board = new Board();
         HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
 
         Coord coord = new Coord(0, 0);
-        Tile tile = new Tile(whitePlayer.getPlayerColor(), IHive.TileType.BEETLE);
-        game.play(tile, coord.q, coord.r);
+        game.play(Hive.Tile.BEETLE, coord.q, coord.r);
 
         assertEquals(game.currentPlayer, blackPlayer);
     }
 
     // 3b.3
     @Test
-    void whenPlayerPassedTurnSwitchPlayer() throws IHive.IllegalMove {
-        Player whitePlayer = new Player(IHive.PlayerColor.WHITE);
-        Player blackPlayer = new Player(IHive.PlayerColor.BLACK);
+    void whenPlayerPassedTurnSwitchPlayer() throws Hive.IllegalMove {
+        Player whitePlayer = new Player(Hive.Player.WHITE);
+        Player blackPlayer = new Player(Hive.Player.BLACK);
         HiveGame game = new HiveGame(whitePlayer, blackPlayer);
         game.pass();
 
@@ -88,42 +85,42 @@ public class GameSpec {
 
     @Test
     void whenPlayerSurroundedOpponentsQueenItHasWon() {
-        Player whitePlayer = new Player(IHive.PlayerColor.WHITE);
-        Player blackPlayer = new Player(IHive.PlayerColor.BLACK);
+        Player whitePlayer = new Player(Hive.Player.WHITE);
+        Player blackPlayer = new Player(Hive.Player.BLACK);
         Board board = new Board();
-        Tile queenTile = new Tile(blackPlayer.getPlayerColor(), IHive.TileType.QUEEN_BEE);
-        board.placeTile(new Coord(0, 0), queenTile);
+        Stone queenStone = new Stone(blackPlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE);
+        board.placeTile(new Coord(0, 0), queenStone);
 
-        board.placeTile(new Coord(0, -1), new Tile(whitePlayer.getPlayerColor(), IHive.TileType.BEETLE));
-        board.placeTile(new Coord(0, 1), new Tile(whitePlayer.getPlayerColor(), IHive.TileType.SOLDIER_ANT));
-        board.placeTile(new Coord(1, -1), new Tile(whitePlayer.getPlayerColor(), IHive.TileType.GRASSHOPPER));
-        board.placeTile(new Coord(1, 0), new Tile(whitePlayer.getPlayerColor(), IHive.TileType.SPIDER));
-        board.placeTile(new Coord(-1, 0), new Tile(blackPlayer.getPlayerColor(), IHive.TileType.BEETLE));
-        board.placeTile(new Coord(-1, 1), new Tile(blackPlayer.getPlayerColor(), IHive.TileType.GRASSHOPPER));
+        board.placeTile(new Coord(0, -1), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.BEETLE));
+        board.placeTile(new Coord(0, 1), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.SOLDIER_ANT));
+        board.placeTile(new Coord(1, -1), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.GRASSHOPPER));
+        board.placeTile(new Coord(1, 0), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.SPIDER));
+        board.placeTile(new Coord(-1, 0), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.BEETLE));
+        board.placeTile(new Coord(-1, 1), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.GRASSHOPPER));
 
         HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
-        assertTrue(game.isWinner(whitePlayer));
+        assertTrue(game.isWinner(Hive.Player.WHITE));
     }
 
     @Test
     void whenBothPlayersWinItIsADraw() {
-        Player whitePlayer = new Player(IHive.PlayerColor.WHITE);
-        Player blackPlayer = new Player(IHive.PlayerColor.BLACK);
+        Player whitePlayer = new Player(Hive.Player.WHITE);
+        Player blackPlayer = new Player(Hive.Player.BLACK);
         Board board = new Board();
-        Tile queenTile = new Tile(blackPlayer.getPlayerColor(), IHive.TileType.QUEEN_BEE);
-        board.placeTile(new Coord(0, 0), new Tile(blackPlayer.getPlayerColor(), IHive.TileType.QUEEN_BEE));
-        board.placeTile(new Coord(0, 0), new Tile(whitePlayer.getPlayerColor(), IHive.TileType.QUEEN_BEE));
+        Stone queenStone = new Stone(blackPlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE);
+        board.placeTile(new Coord(0, 0), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE));
+        board.placeTile(new Coord(0, 0), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE));
 
-        board.placeTile(new Coord(0, -1), new Tile(whitePlayer.getPlayerColor(), IHive.TileType.BEETLE));
-        board.placeTile(new Coord(0, 1), new Tile(whitePlayer.getPlayerColor(), IHive.TileType.SOLDIER_ANT));
-        board.placeTile(new Coord(1, -1), new Tile(whitePlayer.getPlayerColor(), IHive.TileType.GRASSHOPPER));
-        board.placeTile(new Coord(1, 0), new Tile(whitePlayer.getPlayerColor(), IHive.TileType.SPIDER));
-        board.placeTile(new Coord(-1, 0), new Tile(blackPlayer.getPlayerColor(), IHive.TileType.BEETLE));
-        board.placeTile(new Coord(-1, 1), new Tile(blackPlayer.getPlayerColor(), IHive.TileType.GRASSHOPPER));
+        board.placeTile(new Coord(0, -1), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.BEETLE));
+        board.placeTile(new Coord(0, 1), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.SOLDIER_ANT));
+        board.placeTile(new Coord(1, -1), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.GRASSHOPPER));
+        board.placeTile(new Coord(1, 0), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.SPIDER));
+        board.placeTile(new Coord(-1, 0), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.BEETLE));
+        board.placeTile(new Coord(-1, 1), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.GRASSHOPPER));
 
-        board.placeTile(new Coord(-1, -1), new Tile(blackPlayer.getPlayerColor(), IHive.TileType.SOLDIER_ANT));
-        board.placeTile(new Coord(0, -2), new Tile(blackPlayer.getPlayerColor(), IHive.TileType.SPIDER));
-        board.placeTile(new Coord(1, -2), new Tile(blackPlayer.getPlayerColor(), IHive.TileType.SOLDIER_ANT));
+        board.placeTile(new Coord(-1, -1), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.SOLDIER_ANT));
+        board.placeTile(new Coord(0, -2), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.SPIDER));
+        board.placeTile(new Coord(1, -2), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.SOLDIER_ANT));
 
         HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
         assertTrue(game.isDraw());
@@ -131,31 +128,31 @@ public class GameSpec {
 
     // 4a
     @Test
-    void playerCanOnlyPlaceItsOwnsNotPlacedTiles() throws IHive.IllegalMove {
-        Player whitePlayer = new Player(IHive.PlayerColor.WHITE);
-        Player blackPlayer = new Player(IHive.PlayerColor.BLACK);
+    void playerCanOnlyPlaceItsOwnsNotPlacedTiles() throws Hive.IllegalMove {
+        Player whitePlayer = new Player(Hive.Player.WHITE);
+        Player blackPlayer = new Player(Hive.Player.BLACK);
 
         HiveGame game = new HiveGame(whitePlayer, blackPlayer);
-        Tile tile = new Tile(blackPlayer.getPlayerColor(), IHive.TileType.BEETLE);
 
-        assertThrows(IHive.IllegalMove.class, () -> {
-            game.play(tile, 0, 0);
+        assertThrows(Hive.IllegalMove.class, () -> {
+            game.play(Hive.Tile.BEETLE, 0, 0);
+            game.play(Hive.Tile.BEETLE, 0, 0);
+            game.play(Hive.Tile.BEETLE, 0, 0);
         });
     }
 
     // 4b
     @Test
     void firstTileHasToBePlacedOnAnEmptyField() {
-        Player whitePlayer = new Player(IHive.PlayerColor.WHITE);
-        Player blackPlayer = new Player(IHive.PlayerColor.BLACK);
+        Player whitePlayer = new Player(Hive.Player.WHITE);
+        Player blackPlayer = new Player(Hive.Player.BLACK);
         Board board = new Board();
-        board.placeTile(new Coord(0, 0), new Tile(whitePlayer.getPlayerColor(), IHive.TileType.BEETLE));
+        board.placeTile(new Coord(0, 0), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.BEETLE));
 
         HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
-        Tile tile = new Tile(whitePlayer.getPlayerColor(), IHive.TileType.SPIDER);
 
-        assertThrows(IHive.IllegalMove.class, () -> {
-            game.play(tile, 0, 0);
+        assertThrows(Hive.IllegalMove.class, () -> {
+            game.play(Hive.Tile.SPIDER, 0, 0);
         });
     }
 
@@ -173,20 +170,20 @@ public class GameSpec {
 
     // 4e.1
     @Test
-    void whenPlayerHasNotPlacedQueenAfterThreeTilePlacementsBlockMoves() throws IHive.IllegalMove {
-        Player whitePlayer = new Player(IHive.PlayerColor.WHITE);
-        Player blackPlayer = new Player(IHive.PlayerColor.BLACK);
+    void whenPlayerHasNotPlacedQueenAfterThreeTilePlacementsBlockMoves() throws Hive.IllegalMove {
+        Player whitePlayer = new Player(Hive.Player.WHITE);
+        Player blackPlayer = new Player(Hive.Player.BLACK);
 
         Board board = new Board();
 
-        board.placeTile(new Coord(0, 0), new Tile(whitePlayer.getPlayerColor(), IHive.TileType.BEETLE));
-        board.placeTile(new Coord(0, 1), new Tile(whitePlayer.getPlayerColor(), IHive.TileType.SOLDIER_ANT));
-        board.placeTile(new Coord(0, 2), new Tile(whitePlayer.getPlayerColor(), IHive.TileType.GRASSHOPPER));
+        board.placeTile(new Coord(0, 0), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.BEETLE));
+        board.placeTile(new Coord(0, 1), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.SOLDIER_ANT));
+        board.placeTile(new Coord(0, 2), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.GRASSHOPPER));
 
         HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
 
-        assertThrows(IHive.IllegalMove.class, () -> {
-            game.play(new Tile(whitePlayer.getPlayerColor(), IHive.TileType.BEETLE), -1, 0);
+        assertThrows(Hive.IllegalMove.class, () -> {
+            game.play(Hive.Tile.BEETLE, -1, 0);
         });
     }
 

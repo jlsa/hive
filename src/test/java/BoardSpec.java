@@ -1,4 +1,4 @@
-import nl.hanze.hive.IHive;
+import nl.hanze.hive.Hive;
 import nl.josaho.*;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,9 +24,9 @@ public class BoardSpec {
         board.addField(positionOne, new Field());
         board.addField(positionTwo, new Field());
 
-        Tile tile = new Tile(IHive.PlayerColor.BLACK, IHive.TileType.BEETLE);
-        boolean canAddFirst = board.placeTile(positionOne, tile);
-        boolean canAddSecond = board.placeTile(positionTwo, tile);
+        Stone stone = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
+        boolean canAddFirst = board.placeTile(positionOne, stone);
+        boolean canAddSecond = board.placeTile(positionTwo, stone);
         assertNotEquals(canAddFirst, canAddSecond);
     }
 
@@ -38,11 +38,11 @@ public class BoardSpec {
         board.addField(from, new Field());
         board.addField(to, new Field());
 
-        Tile tile = new Tile(IHive.PlayerColor.BLACK, IHive.TileType.BEETLE);
-        board.placeTile(from, tile);
+        Stone stone = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
+        board.placeTile(from, stone);
 
         board.moveTile(from, to);
-        assertTrue(board.fields.get(to).containsTile(tile));
+        assertTrue(board.fields.get(to).containsTile(stone));
     }
 
     @Test
@@ -52,20 +52,20 @@ public class BoardSpec {
         Coord coord = new Coord(0, 0);
         board.addField(coord, new Field());
 
-        Tile beetle = new Tile(IHive.PlayerColor.BLACK, IHive.TileType.BEETLE);
-        Tile spider = new Tile(IHive.PlayerColor.WHITE, IHive.TileType.SPIDER);
-        Tile ant = new Tile(IHive.PlayerColor.BLACK, IHive.TileType.GRASSHOPPER);
+        Stone beetle = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
+        Stone spider = new Stone(Hive.Player.WHITE, Hive.Tile.SPIDER);
+        Stone ant = new Stone(Hive.Player.BLACK, Hive.Tile.GRASSHOPPER);
 
         board.placeTile(coord, beetle);
         board.placeTile(coord, spider);
         board.placeTile(coord, ant);
 
-        Tile[] tiles = new Tile[3];
-        tiles[0] = beetle;
-        tiles[1] = spider;
-        tiles[2] = ant;
+        Stone[] stones = new Stone[3];
+        stones[0] = beetle;
+        stones[1] = spider;
+        stones[2] = ant;
 
-        assertArrayEquals(tiles, board.fields.get(coord).getTiles());
+        assertArrayEquals(stones, board.fields.get(coord).getStones());
     }
 
     @Test
@@ -76,13 +76,13 @@ public class BoardSpec {
         board.addField(from, new Field());
         board.addField(to, new Field());
 
-        Tile blackBeetle = new Tile(IHive.PlayerColor.BLACK, IHive.TileType.BEETLE);
+        Stone blackBeetle = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
         board.placeTile(from, blackBeetle);
-        Tile whiteBeetle = new Tile(IHive.PlayerColor.WHITE, IHive.TileType.BEETLE);
+        Stone whiteBeetle = new Stone(Hive.Player.WHITE, Hive.Tile.BEETLE);
         board.placeTile(from, whiteBeetle);
 
         board.moveTile(from, to);
-        Tile[] tiles = new Tile[] {blackBeetle};
-        assertArrayEquals(tiles, board.fields.get(from).getTiles());
+        Stone[] stones = new Stone[] {blackBeetle};
+        assertArrayEquals(stones, board.fields.get(from).getStones());
     }
 }

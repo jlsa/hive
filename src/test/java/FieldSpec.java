@@ -1,4 +1,4 @@
-import nl.hanze.hive.IHive;
+import nl.hanze.hive.Hive;
 import nl.josaho.*;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,35 +14,35 @@ public class FieldSpec {
 
     @Test
     void FieldCanAddTile() {
-        Tile tile = new Tile(IHive.PlayerColor.BLACK, IHive.TileType.BEETLE);
+        Stone stone = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
         Field field = new Field();
-        field.addTile(tile);
-        assertArrayEquals(new Tile[] {tile}, field.getTiles());
+        field.addTile(stone);
+        assertArrayEquals(new Stone[] {stone}, field.getStones());
     }
 
     @Test
     void FieldCanRemoveTile() {
-        Tile tile = new Tile(IHive.PlayerColor.BLACK, IHive.TileType.BEETLE);
+        Stone stone = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
         Field field = new Field();
-        field.addTile(tile);
+        field.addTile(stone);
         field.popTile();
-        assertArrayEquals(new Tile[] {}, field.getTiles());
+        assertArrayEquals(new Stone[] {}, field.getStones());
     }
 
     @Test
     void FieldCanContainTileOnlyOnce() {
-        Tile tile = new Tile(IHive.PlayerColor.BLACK, IHive.TileType.BEETLE);
+        Stone stone = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
         Field field = new Field();
-        field.addTile(tile);
-        field.addTile(tile);
-        assertArrayEquals(new Tile[] {tile}, field.getTiles());
+        field.addTile(stone);
+        field.addTile(stone);
+        assertArrayEquals(new Stone[] {stone}, field.getStones());
     }
 
     @Test
     void FieldHasTileThenTrue() {
-        Tile tile = new Tile(IHive.PlayerColor.BLACK, IHive.TileType.BEETLE);
+        Stone stone = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
         Field field = new Field();
-        field.addTile(tile);
-        assertTrue(field.containsTile(tile));
+        field.addTile(stone);
+        assertTrue(field.containsTile(stone));
     }
 }

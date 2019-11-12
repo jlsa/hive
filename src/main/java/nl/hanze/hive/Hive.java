@@ -1,12 +1,9 @@
 package nl.hanze.hive;
 
-import nl.josaho.Player;
-import nl.josaho.Tile;
-
 /**
  * Hive game.
  */
-public interface IHive {
+public interface Hive {
     /**
      * Play a new tile.
      * @param tile Tile to play
@@ -56,10 +53,10 @@ public interface IHive {
     /**
      * Types of tiles.
      */
-    enum TileType { QUEEN_BEE, SPIDER, BEETLE, GRASSHOPPER, SOLDIER_ANT }
+    enum Tile { QUEEN_BEE, SPIDER, BEETLE, GRASSHOPPER, SOLDIER_ANT }
 
     /**
      * Players.
      */
-    enum PlayerColor { WHITE, BLACK }
+    enum Player { WHITE, BLACK }
 }

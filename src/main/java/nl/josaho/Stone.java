@@ -1,33 +1,33 @@
 package nl.josaho;
 
-import nl.hanze.hive.IHive.*;
+import nl.hanze.hive.Hive;
 
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Tile {
-    private PlayerColor playerColor;
-    private Tile[] edges = new Tile[6];
-    private TileType tileType;
+public class Stone {
+    private Hive.Player playerColor;
+    private Stone[] edges = new Stone[6];
+    private Hive.Tile tileType;
 
-    public Tile(PlayerColor playerColor) {
+    public Stone(Hive.Player playerColor) {
         this(playerColor, null);
     }
 
-    public Tile(PlayerColor playerColor, TileType tileType) {
+    public Stone(Hive.Player playerColor, Hive.Tile tileType) {
         this.playerColor = playerColor;
         this.tileType = tileType;
     }
 
-    public PlayerColor getColor() {
+    public Hive.Player getColor() {
         return playerColor;
     }
 
-    public Tile[] getEdges() {
+    public Stone[] getEdges() {
         return edges.clone();
     }
 
-    public TileType getTileType() {
+    public Hive.Tile getTileType() {
         return tileType;
     }
 
@@ -35,10 +35,10 @@ public class Tile {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Tile tile = (Tile) o;
-        return playerColor == tile.playerColor &&
-                Arrays.equals(edges, tile.edges) &&
-                tileType == tile.tileType;
+        Stone stone = (Stone) o;
+        return playerColor == stone.playerColor &&
+                Arrays.equals(edges, stone.edges) &&
+                tileType == stone.tileType;
     }
 
     @Override

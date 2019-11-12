@@ -1,22 +1,21 @@
 package nl.josaho;
-import nl.hanze.hive.IHive;
+import nl.hanze.hive.Hive;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-public class HiveGame implements IHive {
+public class HiveGame implements Hive {
     public Board board;
-    public Player currentPlayer;
-    public Player opponent;
+    public nl.josaho.Player currentPlayer;
+    public nl.josaho.Player opponent;
 
-    public HiveGame(Player white, Player black, Board board)
-    {
+    public HiveGame(nl.josaho.Player white, nl.josaho.Player black, Board board) {
         this.board = board;
         currentPlayer = white;
         opponent = black;
     }
 
-    public HiveGame(Player white, Player black) {
+    public HiveGame(nl.josaho.Player white, nl.josaho.Player black) {
         this(white, black, new Board());
     }
 
@@ -30,15 +29,14 @@ public class HiveGame implements IHive {
      */
     @Override
     public void play(Tile tile, int q, int r) throws IllegalMove {
-
-        if (board.hasTileBeenPlacedAlready(tile)) {
+        if (board.hasTileBeenPlacedAlready(tile, currentPlayer.getPlayerColor())) {
             throw new IllegalMove("Tile had already been placed. Can't be placed multiple times.");
         }
         if (playerHasToPlayQueen()) {
             throw new IllegalMove("Player has to play queen.");
         }
 
-        if (!tileIsFromPlayer(tile)) {
+        if (!tileIsFromPlayer(tile, currentPlayer)) {
             throw new IllegalMove("Tile is not from player");
         }
 
@@ -46,7 +44,7 @@ public class HiveGame implements IHive {
             throw new IllegalMove("There is a tile placed already.");
         }
 
-        board.placeTile(new Coord(q, r), tile);
+        board.placeTile(new Coord(q, r), new Stone(currentPlayer.getPlayerColor(), tile));
         switchPlayer();
     }
 
@@ -61,7 +59,9 @@ public class HiveGame implements IHive {
      */
     @Override
     public void move(int fromQ, int fromR, int toQ, int toR) throws IllegalMove {
-
+        if (!isTileConnected(new Coord(toQ, toR))) {
+            throw new IllegalMove("Your tile has to be attached to another tile");
+        }
         if (!playerHasPlayedQueen(currentPlayer)) {
             throw new IllegalMove("You first have to play the queen");
         }
@@ -70,9 +70,9 @@ public class HiveGame implements IHive {
         Field field = board.getFields().get(from);
 
         if (field != null) {
-            Tile tile = field.peekTile();
-            if (tile != null) {
-                if (tile.getColor() == opponent.getPlayerColor()) {
+            Stone stone = field.peekTile();
+            if (stone != null) {
+                if (stone.getColor() == opponent.getPlayerColor()) {
                     throw new IllegalMove("Not allowed to move a tile that is not your own.");
                 }
             }
@@ -95,7 +95,7 @@ public class HiveGame implements IHive {
         switchPlayer();
     }
 
-    public boolean isQueenSurrounded(Player player) {
+    public boolean isQueenSurrounded(nl.josaho.Player player) {
         // fix this! It is not checking for surrounding tiles
         return playerHasPlayedQueen(player);
     }
@@ -107,7 +107,7 @@ public class HiveGame implements IHive {
      */
     @Override
     public boolean isWinner(Player player) {
-        if (player.getPlayerColor() == currentPlayer.getPlayerColor()) {
+        if (player == currentPlayer.getPlayerColor()) {
             return isQueenSurrounded(opponent);
         } else {
             return isQueenSurrounded(currentPlayer);
@@ -121,62 +121,80 @@ public class HiveGame implements IHive {
      */
     @Override
     public boolean isDraw() {
-        if (isWinner(currentPlayer) && isWinner(opponent)) {
+        if (isWinner(currentPlayer.getPlayerColor()) && isWinner(opponent.getPlayerColor())) {
             return true;
         }
         return false;
     }
 
     private void switchPlayer() {
-        Player tmp = currentPlayer;
+        nl.josaho.Player tmp = currentPlayer;
         currentPlayer = opponent;
         opponent = tmp;
     }
 
     private boolean playerHasToPlayQueen() {
-        ArrayList<Tile> tiles = new ArrayList<>();
+        ArrayList<Stone> stones = new ArrayList<>();
         for(Map.Entry<Coord, Field> entry : board.getFields().entrySet()) {
             Field field = entry.getValue();
 
-            for (Tile tile : field.getTiles()) {
-                if (tile.getColor() == currentPlayer.getPlayerColor()) {
-                    if (tile.getTileType() == TileType.QUEEN_BEE) {
+            for (Stone stone : field.getStones()) {
+                if (stone.getColor() == currentPlayer.getPlayerColor()) {
+                    if (stone.getTileType() == Hive.Tile.QUEEN_BEE) {
                         return false;
                     }
-                    tiles.add((tile));
+                    stones.add((stone));
                 }
             }
         }
-        if (tiles.size() == 3) {
+        if (stones.size() == 3) {
             return true;
         }
 
         return false;
     }
 
-    private boolean tileIsFromPlayer(Tile tile) {
-        return tile.getColor() == currentPlayer.getPlayerColor();
-    }
-
-    private boolean fieldIsEmpty(Coord coord) {
-        Field field = board.getFields().get(coord);
-        if (field != null) {
-            if (field.getTiles().length > 0) {
+    private boolean tileIsFromPlayer(Tile tile, nl.josaho.Player player) {
+        for (Stone stone : player.getStones()) {
+            if (stone.getTileType() == tile) {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean playerHasPlayedQueen(Player player) {
-        Tile queenTile = new Tile(player.getPlayerColor(), TileType.QUEEN_BEE);
-        for (Map.Entry<Coord, Field> entry : board.getFields().entrySet()) {
-            Field field = entry.getValue();
-
-            if (field.containsTile(queenTile)) {
+    private boolean fieldIsEmpty(Coord coord) {
+        Field field = board.getFields().get(coord);
+        if (field != null) {
+            if (field.getStones().length > 0) {
                 return true;
             }
         }
+        return false;
+    }
+
+    private boolean playerHasPlayedQueen(nl.josaho.Player player) {
+        Stone queenStone = new Stone(player.getPlayerColor(), Hive.Tile.QUEEN_BEE);
+        for (Map.Entry<Coord, Field> entry : board.getFields().entrySet()) {
+            Field field = entry.getValue();
+
+            if (field.containsTile(queenStone)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isTileConnected(Coord coord) {
+        for (Coord c : coord.getNeighborCoords()) {
+            Field field = board.getFields().get(c);
+            if (field != null) {
+                if (field.getStones().length > 0) {
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 }
