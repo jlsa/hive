@@ -189,4 +189,16 @@ public class GameSpec {
             game.play(new Tile(whitePlayer.getPlayerColor(), IHive.TileType.BEETLE), -1, 0);
         });
     }
+
+    @Test
+    void playerWantsToPassButNotAllowed() {
+        Player whitePlayer = new Player(IHive.PlayerColor.WHITE);
+        Player blackPlayer = new Player(IHive.PlayerColor.BLACK);
+
+        Board board = new Board();
+
+        HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
+
+        assertThrows(IHive.IllegalMove.class, game::pass);
+    }
 }

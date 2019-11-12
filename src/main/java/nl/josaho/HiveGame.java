@@ -88,6 +88,10 @@ public class HiveGame implements IHive {
      */
     @Override
     public void pass() throws IllegalMove {
+        if (!this.currentPlayer.canPass()) {
+            throw new IllegalMove();
+        }
+
         switchPlayer();
     }
 

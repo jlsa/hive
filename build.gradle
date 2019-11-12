@@ -11,6 +11,10 @@ repositories {
     mavenCentral()
 }
 
+test {
+    useJUnitPlatform()
+}
+
 dependencies {
     testCompile("org.junit.jupiter:junit-jupiter-api:" + junitJupiterVersion)
     testRuntime("org.junit.jupiter:junit-jupiter-engine:" + junitJupiterVersion)
