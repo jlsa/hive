@@ -78,6 +78,9 @@ public class GameSpec {
         Player whitePlayer = new Player(Hive.Player.WHITE);
         Player blackPlayer = new Player(Hive.Player.BLACK);
         HiveGame game = new HiveGame(whitePlayer, blackPlayer);
+
+        whitePlayer.getStones().clear();
+
         game.pass();
 
         assertEquals(game.currentPlayer, blackPlayer);
@@ -196,7 +199,6 @@ public class GameSpec {
 
         HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
 
-//        assertThrows(Hive.IllegalMove.class, game::pass);
         assertThrows(Hive.IllegalMove.class, () -> {
             game.pass();
         });
