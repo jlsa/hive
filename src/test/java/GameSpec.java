@@ -188,14 +188,17 @@ public class GameSpec {
     }
 
     @Test
-    void playerWantsToPassButNotAllowed() {
-        Player whitePlayer = new Player(IHive.PlayerColor.WHITE);
-        Player blackPlayer = new Player(IHive.PlayerColor.BLACK);
+    void playerWantsToPassButNotAllowed() throws Hive.IllegalMove {
+        Player whitePlayer = new Player(Hive.Player.WHITE);
+        Player blackPlayer = new Player(Hive.Player.BLACK);
 
         Board board = new Board();
 
         HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
 
-        assertThrows(IHive.IllegalMove.class, game::pass);
+//        assertThrows(Hive.IllegalMove.class, game::pass);
+        assertThrows(Hive.IllegalMove.class, () -> {
+            game.pass();
+        });
     }
 }
