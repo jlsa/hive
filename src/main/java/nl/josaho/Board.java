@@ -1,5 +1,7 @@
 package nl.josaho;
 
+import nl.hanze.hive.Hive;
+
 import java.util.HashMap;
 
 public class Board {
@@ -16,14 +18,14 @@ public class Board {
          fields.put(coord, field);
     }
 
-    public boolean placeTile(Coord coord, Tile tile) {
+    public boolean placeTile(Coord coord, Stone stone) {
         if (fields.get(coord) == null) {
             addField(coord, new Field());
         }
 
-        if (!hasTileBeenPlacedAlready(tile)) {
+        if (!hasTileBeenPlacedAlready(stone.getTileType(), stone.getColor())) {
             Field field = fields.get(coord);
-            field.addTile(tile);
+            field.addTile(stone);
             return true;
         }
 
@@ -35,7 +37,7 @@ public class Board {
             return;
         }
         Field fromField = fields.get(from);
-        if (fromField.getTiles().length == 0) {
+        if (fromField.getStones().length == 0) {
             return;
         }
 
@@ -43,9 +45,10 @@ public class Board {
         toField.addTile(fromField.popTile());
     }
 
-    public boolean hasTileBeenPlacedAlready(Tile tile) {
+    public boolean hasTileBeenPlacedAlready(Hive.Tile tile, Hive.Player player) {
+        Stone stone = new Stone(player, tile);
         for (Field f: fields.values()) {
-            if (f.containsTile(tile)) {
+            if (f.containsTile(stone)) {
                 return true;
             }
         }

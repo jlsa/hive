@@ -1,4 +1,4 @@
-import nl.hanze.hive.IHive.*;
+import nl.hanze.hive.Hive;
 import nl.josaho.*;
 import org.junit.jupiter.api.*;
 
@@ -11,38 +11,38 @@ public class PlayerSpec {
     // 1C
     @Test
     void givenANewBlackPlayerHasAllStartTiles() {
-        Player player = new Player(PlayerColor.BLACK);
+        nl.josaho.Player player = new Player(Hive.Player.BLACK);
 
-        ArrayList<Tile> tiles = new ArrayList<>();
-        tiles.add(new Tile(PlayerColor.BLACK, TileType.QUEEN_BEE));
-        tiles.add(new Tile(PlayerColor.BLACK, TileType.SPIDER));
-        tiles.add(new Tile(PlayerColor.BLACK, TileType.SPIDER));
-        tiles.add(new Tile(PlayerColor.BLACK, TileType.BEETLE));
-        tiles.add(new Tile(PlayerColor.BLACK, TileType.BEETLE));
-        tiles.add(new Tile(PlayerColor.BLACK, TileType.SOLDIER_ANT));
-        tiles.add(new Tile(PlayerColor.BLACK, TileType.SOLDIER_ANT));
-        tiles.add(new Tile(PlayerColor.BLACK, TileType.SOLDIER_ANT));
-        tiles.add(new Tile(PlayerColor.BLACK, TileType.GRASSHOPPER));
-        tiles.add(new Tile(PlayerColor.BLACK, TileType.GRASSHOPPER));
-        tiles.add(new Tile(PlayerColor.BLACK, TileType.GRASSHOPPER));
-        assertIterableEquals(player.getTiles(), tiles);
+        ArrayList<Stone> stones = new ArrayList<>();
+        stones.add(new Stone(Hive.Player.BLACK, Hive.Tile.QUEEN_BEE));
+        stones.add(new Stone(Hive.Player.BLACK, Hive.Tile.SPIDER));
+        stones.add(new Stone(Hive.Player.BLACK, Hive.Tile.SPIDER));
+        stones.add(new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE));
+        stones.add(new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE));
+        stones.add(new Stone(Hive.Player.BLACK, Hive.Tile.SOLDIER_ANT));
+        stones.add(new Stone(Hive.Player.BLACK, Hive.Tile.SOLDIER_ANT));
+        stones.add(new Stone(Hive.Player.BLACK, Hive.Tile.SOLDIER_ANT));
+        stones.add(new Stone(Hive.Player.BLACK, Hive.Tile.GRASSHOPPER));
+        stones.add(new Stone(Hive.Player.BLACK, Hive.Tile.GRASSHOPPER));
+        stones.add(new Stone(Hive.Player.BLACK, Hive.Tile.GRASSHOPPER));
+        assertIterableEquals(player.getStones(), stones);
     }
 
     @Test
     void givenANewWhitePlayerHasAllStartTiles() {
-        Player player = new Player(PlayerColor.WHITE);
-        ArrayList<Tile> tiles = new ArrayList<>();
-        tiles.add(new Tile(PlayerColor.WHITE, TileType.QUEEN_BEE));
-        tiles.add(new Tile(PlayerColor.WHITE, TileType.SPIDER));
-        tiles.add(new Tile(PlayerColor.WHITE, TileType.SPIDER));
-        tiles.add(new Tile(PlayerColor.WHITE, TileType.BEETLE));
-        tiles.add(new Tile(PlayerColor.WHITE, TileType.BEETLE));
-        tiles.add(new Tile(PlayerColor.WHITE, TileType.SOLDIER_ANT));
-        tiles.add(new Tile(PlayerColor.WHITE, TileType.SOLDIER_ANT));
-        tiles.add(new Tile(PlayerColor.WHITE, TileType.SOLDIER_ANT));
-        tiles.add(new Tile(PlayerColor.WHITE, TileType.GRASSHOPPER));
-        tiles.add(new Tile(PlayerColor.WHITE, TileType.GRASSHOPPER));
-        tiles.add(new Tile(PlayerColor.WHITE, TileType.GRASSHOPPER));
-        assertIterableEquals(player.getTiles(), tiles);
+        Player player = new Player(Hive.Player.WHITE);
+        ArrayList<Stone> stones = new ArrayList<>();
+        stones.add(new Stone(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE));
+        stones.add(new Stone(Hive.Player.WHITE, Hive.Tile.SPIDER));
+        stones.add(new Stone(Hive.Player.WHITE, Hive.Tile.SPIDER));
+        stones.add(new Stone(Hive.Player.WHITE, Hive.Tile.BEETLE));
+        stones.add(new Stone(Hive.Player.WHITE, Hive.Tile.BEETLE));
+        stones.add(new Stone(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT));
+        stones.add(new Stone(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT));
+        stones.add(new Stone(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT));
+        stones.add(new Stone(Hive.Player.WHITE, Hive.Tile.GRASSHOPPER));
+        stones.add(new Stone(Hive.Player.WHITE, Hive.Tile.GRASSHOPPER));
+        stones.add(new Stone(Hive.Player.WHITE, Hive.Tile.GRASSHOPPER));
+        assertIterableEquals(player.getStones(), stones);
     }
 }

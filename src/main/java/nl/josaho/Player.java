@@ -1,35 +1,35 @@
 package nl.josaho;
 
-import nl.hanze.hive.IHive.*;
+import nl.hanze.hive.Hive;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Player {
-    private PlayerColor playerColor;
-    private ArrayList<Tile> tiles;
+    private Hive.Player playerColor;
+    private ArrayList<Stone> stones;
 
-    public Player(PlayerColor playerColor) {
+    public Player(Hive.Player playerColor) {
         this.playerColor = playerColor;
-        this.tiles = new ArrayList<>();
-        this.tiles.add(new Tile(playerColor, TileType.QUEEN_BEE));
-        this.tiles.add(new Tile(playerColor, TileType.SPIDER));
-        this.tiles.add(new Tile(playerColor, TileType.SPIDER));
-        this.tiles.add(new Tile(playerColor, TileType.BEETLE));
-        this.tiles.add(new Tile(playerColor, TileType.BEETLE));
-        this.tiles.add(new Tile(playerColor, TileType.SOLDIER_ANT));
-        this.tiles.add(new Tile(playerColor, TileType.SOLDIER_ANT));
-        this.tiles.add(new Tile(playerColor, TileType.SOLDIER_ANT));
-        this.tiles.add(new Tile(playerColor, TileType.GRASSHOPPER));
-        this.tiles.add(new Tile(playerColor, TileType.GRASSHOPPER));
-        this.tiles.add(new Tile(playerColor, TileType.GRASSHOPPER));
+        this.stones = new ArrayList<>();
+        this.stones.add(new Stone(playerColor, Hive.Tile.QUEEN_BEE));
+        this.stones.add(new Stone(playerColor, Hive.Tile.SPIDER));
+        this.stones.add(new Stone(playerColor, Hive.Tile.SPIDER));
+        this.stones.add(new Stone(playerColor, Hive.Tile.BEETLE));
+        this.stones.add(new Stone(playerColor, Hive.Tile.BEETLE));
+        this.stones.add(new Stone(playerColor, Hive.Tile.SOLDIER_ANT));
+        this.stones.add(new Stone(playerColor, Hive.Tile.SOLDIER_ANT));
+        this.stones.add(new Stone(playerColor, Hive.Tile.SOLDIER_ANT));
+        this.stones.add(new Stone(playerColor, Hive.Tile.GRASSHOPPER));
+        this.stones.add(new Stone(playerColor, Hive.Tile.GRASSHOPPER));
+        this.stones.add(new Stone(playerColor, Hive.Tile.GRASSHOPPER));
     }
 
-    public ArrayList<Tile> getTiles() {
-        return tiles;
+    public ArrayList<Stone> getStones() {
+        return stones;
     }
 
-    public PlayerColor getPlayerColor() { return playerColor; }
+    public Hive.Player getPlayerColor() { return playerColor; }
 
     @Override
     public boolean equals(Object o) {
