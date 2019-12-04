@@ -21,6 +21,7 @@ public class MoveSpec {
         });
     }
 
+    // 5b
     @Test
     void playerCanOnlyMoveWhenQueenIsOnBoard() throws Hive.IllegalMove {
         Player whitePlayer = new Player(Hive.Player.WHITE);
@@ -37,6 +38,7 @@ public class MoveSpec {
         });
     }
 
+    // 5c
     @Test
     void tileHasToBeConnectedToAtleastOneOtherTile() throws Hive.IllegalMove {
         Player whitePlayer = new Player(Hive.Player.WHITE);
@@ -55,23 +57,28 @@ public class MoveSpec {
         });
     }
 
+    // 5d-1
     @Test
     void allTilesHaveToBeConnected() throws Hive.IllegalMove {
         Player whitePlayer = new Player(Hive.Player.WHITE);
         Player blackPlayer = new Player(Hive.Player.BLACK);
 
         Board board = new Board();
-        board.placeTile(new Coord(0, 0), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE));
-        board.placeTile(new Coord(0, 1), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE));
-        board.placeTile(new Coord(0, 2), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.SOLDIER_ANT));
-        board.placeTile(new Coord(0, 3), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.BEETLE));
-        board.placeTile(new Coord(0, 4), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.GRASSHOPPER));
-        board.placeTile(new Coord(0, 5), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.SPIDER));
+
+        Coord from = new Coord(-2, 2);
+        Coord to = new Coord(-1, 1);
+
+        board.placeTile(new Coord(-1, 0), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE));
+        board.placeTile(new Coord(-1, 1), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE));
+        board.placeTile(new Coord(-1, 2), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.SOLDIER_ANT));
+        board.placeTile(new Coord(-4, 3), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.BEETLE));
+        board.placeTile(new Coord(-1, 4), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.GRASSHOPPER));
+        board.placeTile(new Coord(-1, 5), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.SPIDER));
 
         HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
 
-//        assertThrows(Hive.IllegalMove.class, () -> {
-//            game.move(from.q, from.r, to.q, to.r);
-//        });
+        assertThrows(Hive.IllegalMove.class, () -> {
+            game.move(from.q, from.r, to.q, to.r);
+        });
     }
 }

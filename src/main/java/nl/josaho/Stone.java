@@ -19,6 +19,10 @@ public class Stone {
         this.tileType = tileType;
     }
 
+    public Stone(nl.josaho.Player player, Hive.Tile tile) {
+        this(player.getPlayerColor(), tile);
+    }
+
     public Hive.Player getColor() {
         return playerColor;
     }

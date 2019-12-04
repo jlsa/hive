@@ -3,6 +3,8 @@ package nl.josaho;
 import nl.hanze.hive.Hive;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
 
 public class Board {
     public HashMap<Coord, Field> fields = new HashMap<Coord, Field>();
@@ -14,8 +16,16 @@ public class Board {
         return fields;
     }
 
+    public Field get(Coord coord) {
+        return fields.get(coord);
+    }
+
     public void addField(Coord coord, Field field) {
          fields.put(coord, field);
+    }
+
+    public void addField(Coord coord) {
+        addField(coord, new Field());
     }
 
     public boolean placeTile(Coord coord, Stone stone) {
@@ -41,8 +51,12 @@ public class Board {
             return;
         }
 
-        Field toField = fields.get(to);
+        if (fields.get(to) == null) {
+            addField(to);
+        }
+        Field toField = get(to);
         toField.addTile(fromField.popTile());
+        fields.replace(to, get(to), toField);
     }
 
     public boolean hasTileBeenPlacedAlready(Hive.Tile tile, Hive.Player player) {
@@ -53,5 +67,56 @@ public class Board {
             }
         }
         return false;
+    }
+
+    public boolean allStonesAreConnected() {
+        Coord start = null;
+        Stack<Coord> stack = new Stack<>();
+        Stack<Coord> visited = new Stack<>();
+
+        for (Map.Entry<Coord, Field> entry : fields.entrySet()) {
+            Field field = entry.getValue();
+            Coord coord = entry.getKey();
+            if (field.hasStones()) {
+                start = coord;
+                break;
+            }
+        }
+
+        if (start == null) {
+            return true;
+        }
+
+        for (Coord c: start.getNeighborCoords()) {
+            Field f = get(c);
+            if (f != null) {
+                if (f.hasStones()) {
+                    stack.push(c);
+                }
+            }
+        }
+
+        while (!stack.empty()) {
+            Coord c = stack.pop();
+            visited.push(c);
+
+            for (Coord cc : c.getNeighborCoords()) {
+                if (!visited.contains(cc)) {
+                    Field f = get(cc);
+                    if (f != null) {
+                        if (f.hasStones()) {
+                            stack.push(cc);
+                        }
+                    }
+                }
+            }
+        }
+
+        int check = 0;
+        for (Field f: fields.values()) {
+            check += f.getStones().length;
+        }
+
+        return visited.size() == check;
     }
 }

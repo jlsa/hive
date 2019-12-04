@@ -21,6 +21,11 @@ public class Field {
         return this.stones.toArray(new Stone[this.stones.size()]);
     }
 
+    public boolean hasStones() {
+        return this.stones.size() > 0;
+    }
+
+
     public void addTile(Stone stone) {
         if (!this.stones.contains(stone)) {
             this.stones.push(stone);

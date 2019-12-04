@@ -37,4 +37,9 @@ public class Coord {
     public int hashCode() {
         return Objects.hash(q, r);
     }
+
+    @Override
+    public String toString() {
+        return "{" + q + ", " + r + "}";
+    }
 }

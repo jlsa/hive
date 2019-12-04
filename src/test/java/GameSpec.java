@@ -1,4 +1,4 @@
-import nl.hanze.hive.Hive;
+import nl.hanze.hive.*;
 import nl.josaho.*;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,15 +45,14 @@ public class GameSpec {
         Player whitePlayer = new Player(Hive.Player.WHITE);
         Player blackPlayer = new Player(Hive.Player.BLACK);
         Board board = new Board();
-        Stone stone = new Stone(whitePlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE);
-        Coord from = new Coord(0, 0);
-        board.placeTile(from, stone);
-
         HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
 
-        Coord to = new Coord(1, 0);
+        board.placeTile(new Coord(0, 0), new Stone(whitePlayer, Hive.Tile.QUEEN_BEE));
+        board.placeTile(new Coord(0, 1), new Stone(blackPlayer, Hive.Tile.QUEEN_BEE));
+        board.placeTile(new Coord(0, 2), new Stone(whitePlayer, Hive.Tile.BEETLE));
+        board.placeTile(new Coord(0, 3), new Stone(blackPlayer, Hive.Tile.BEETLE));
 
-        game.move(from.q, from.r, to.q, to.r);
+        game.move(0, 0, 0, 2);
 
         assertEquals(game.currentPlayer, blackPlayer);
     }
@@ -157,18 +156,6 @@ public class GameSpec {
         assertThrows(Hive.IllegalMove.class, () -> {
             game.play(Hive.Tile.SPIDER, 0, 0);
         });
-    }
-
-    // 4c
-    @Test
-    void whenThereAreTilesOnBoardNewTileHasToBeConnected() {
-
-    }
-
-    // 4d
-    @Test
-    void whenThereAreTilesFromBothPlayerOnTheBoardANewTileCannotBePlacedNextToAnOpponentsTile() {
-
     }
 
     // 4e.1
