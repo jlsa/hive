@@ -2,12 +2,11 @@ package nl.josaho;
 
 import nl.hanze.hive.Hive;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class Board {
     public HashMap<Coord, Field> fields = new HashMap<Coord, Field>();
+    private int stonesPlayed = 0;
 
     public Board() {
     }
@@ -39,6 +38,7 @@ public class Board {
         if (!hasTileBeenPlacedAlready(stone.getTileType(), stone.getColor())) {
             Field field = fields.get(coord);
             field.addStone(stone);
+            stonesPlayed++;
             return true;
         }
 
@@ -76,10 +76,9 @@ public class Board {
         return false;
     }
 
-    public boolean allStonesAreConnected() {
+    public boolean boardIsOneSwarm() {
+        ArrayList<Coord> visited = new ArrayList<>();
         Coord start = null;
-        Stack<Coord> stack = new Stack<>();
-        Stack<Coord> visited = new Stack<>();
 
         for (Map.Entry<Coord, Field> entry : fields.entrySet()) {
             Field field = entry.getValue();
@@ -90,40 +89,21 @@ public class Board {
             }
         }
 
-        if (start == null) {
-            return true;
-        }
+        recursiveSearchConnectedStones(start, visited);
 
-        for (Coord c: start.getNeighborCoords()) {
+        return visited.size() == stonesPlayed;
+    }
+
+    private void recursiveSearchConnectedStones(Coord start, ArrayList<Coord> visited) {
+        for (Coord c : start.getNeighborCoords()) {
             Field f = get(c);
-            if (f != null) {
+
+            if (!visited.contains(c)) {
                 if (f.hasStones()) {
-                    stack.push(c);
+                    visited.add(c);
+                    recursiveSearchConnectedStones(c, visited);
                 }
             }
         }
-
-        while (!stack.empty()) {
-            Coord c = stack.pop();
-            visited.push(c);
-
-            for (Coord cc : c.getNeighborCoords()) {
-                if (!visited.contains(cc)) {
-                    Field f = get(cc);
-                    if (f != null) {
-                        if (f.hasStones()) {
-                            stack.push(cc);
-                        }
-                    }
-                }
-            }
-        }
-
-        int check = 0;
-        for (Field f: fields.values()) {
-            check += f.getStones().length;
-        }
-
-        return visited.size() == check;
     }
 }

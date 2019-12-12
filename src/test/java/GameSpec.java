@@ -41,18 +41,18 @@ public class GameSpec {
 
     // 3b.1
     @Test
-    void whenPlayerHasMadeAMadeAMoveSwitchPlayer() throws Hive.IllegalMove {
+    void whenPlayerHasMadeAMoveSwitchPlayer() throws Hive.IllegalMove {
         Player whitePlayer = new Player(Hive.Player.WHITE);
         Player blackPlayer = new Player(Hive.Player.BLACK);
         Board board = new Board();
         HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
 
         board.placeStone(new Coord(0, 0), new Stone(whitePlayer, Hive.Tile.QUEEN_BEE));
-        board.placeStone(new Coord(0, 1), new Stone(blackPlayer, Hive.Tile.QUEEN_BEE));
-        board.placeStone(new Coord(0, 2), new Stone(whitePlayer, Hive.Tile.BEETLE));
-        board.placeStone(new Coord(0, 3), new Stone(blackPlayer, Hive.Tile.BEETLE));
+        board.placeStone(new Coord(0, -1), new Stone(blackPlayer, Hive.Tile.QUEEN_BEE));
+        board.placeStone(new Coord(1, -1), new Stone(whitePlayer, Hive.Tile.BEETLE));
+        board.placeStone(new Coord(-1, 0), new Stone(blackPlayer, Hive.Tile.BEETLE));
 
-        game.move(0, 0, 0, 2);
+        game.move(0, 0, 1, 0);
 
         assertEquals(game.currentPlayer, blackPlayer);
     }
