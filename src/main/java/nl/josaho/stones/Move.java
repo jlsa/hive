@@ -7,6 +7,10 @@ import nl.josaho.Field;
 import nl.josaho.Stone;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Move {
 
@@ -26,34 +30,21 @@ public class Move {
     }
 
     public static boolean isValidShift(Board board, Coord from, Coord to) {
+        // min(h(n1), h(n2)) <= max(h(a) - 1, h(b))
         int mini = -1;
-        int maxi = -1;
+        int maxi = 0;
 
         Field a = board.get(from);
         Field b = board.get(to);
-        // min(h(n1), h(n2)) <= max(h(a) - 1, h(b))
 
-        ArrayList<Coord> neighbors = new ArrayList<>();
+        ArrayList<Coord> neighbors = (ArrayList<Coord>) Arrays.stream(from.getNeighborCoords())
+                .filter(s -> Arrays.asList(to.getNeighborCoords()).contains(s))
+                .collect(Collectors.toList());
 
-        for (Coord neighborA : from.getNeighborCoords())
-        {
-            for (Coord neighborB : to.getNeighborCoords()) {
-                if (neighborA.equals(neighborB)) {
-                    neighbors.add(neighborA);
-                }
-            }
-        }
         if (neighbors.size() >= 2) {
-            Coord n1 = neighbors.get(0);
-            Coord n2 = neighbors.get(1);
-
-            Field fieldN1 = board.get(n1);
-            Field fieldN2 = board.get(n2);
-
-            mini = Math.min(fieldN1.height(), fieldN2.height());
+            mini = Math.min(board.get(neighbors.get(0)).height(), board.get(neighbors.get(1)).height());
             maxi = Math.max(a.height() - 1, b.height());
         }
-
 
         return mini <= maxi;
     }
