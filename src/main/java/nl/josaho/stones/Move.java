@@ -46,6 +46,46 @@ public class Move {
             maxi = Math.max(a.height() - 1, b.height());
         }
 
-        return mini <= maxi;
+        boolean isInShiftRange = inShiftRange(board, from, to);
+        boolean connectedDuringShifting = isShiftConnected(board, from, to);
+        return (mini <= maxi) && isInShiftRange && connectedDuringShifting;
+    }
+
+    public static boolean inShiftRange(Board board, Coord from, Coord to) {
+        // check for distance, if its bigger than one always fail
+        Coord diff = new Coord(Math.abs(from.q - to.q), Math.abs(from.r - to.r));
+        System.out.println("diff: " + diff.toString());
+        return diff.q > 1 || diff.r > 1;
+    }
+
+    public static boolean isShiftConnected(Board board, Coord from, Coord to) {
+        // if it has equal neighbor let it pass
+        ArrayList<Coord> neighborsFrom = new ArrayList<>();
+        ArrayList<Coord> neighborsTo = new ArrayList<>();
+
+        for (Coord c : from.getNeighborCoords()) {
+            Field f = board.get(c);
+            if (f.hasStones()) {
+                neighborsFrom.add(c);
+            }
+        }
+
+        for (Coord c : to.getNeighborCoords()) {
+            Field f = board.get(c);
+            if (f.hasStones()) {
+                neighborsTo.add(c);
+            }
+        }
+
+        if (neighborsTo.size() > 0 && neighborsFrom.size() > 0) {
+            ArrayList<Coord> neighbors = (ArrayList<Coord>) neighborsFrom.stream()
+                    .filter(s -> neighborsTo.contains(s))
+                    .collect(Collectors.toList());
+            if (neighbors.size() > 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

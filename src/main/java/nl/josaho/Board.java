@@ -31,7 +31,7 @@ public class Board {
         addField(coord, new Field());
     }
 
-    public boolean placeTile(Coord coord, Stone stone) {
+    public boolean placeStone(Coord coord, Stone stone) {
         if (fields.get(coord) == null) {
             addField(coord, new Field());
         }
@@ -45,7 +45,7 @@ public class Board {
         return false;
     }
 
-    public void moveTile(Coord from, Coord to) {
+    public void moveStone(Coord from, Coord to) {
         if (fields.get(from) == null) {
             return;
         }
@@ -63,7 +63,7 @@ public class Board {
     }
 
     public void shiftStone(Coord from, Coord to) {
-        moveTile(from, to);
+        moveStone(from, to);
     }
 
     public boolean hasTileBeenPlacedAlready(Hive.Tile tile, Hive.Player player) {

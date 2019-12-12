@@ -25,8 +25,8 @@ public class BoardSpec {
         board.addField(positionTwo, new Field());
 
         Stone stone = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
-        boolean canAddFirst = board.placeTile(positionOne, stone);
-        boolean canAddSecond = board.placeTile(positionTwo, stone);
+        boolean canAddFirst = board.placeStone(positionOne, stone);
+        boolean canAddSecond = board.placeStone(positionTwo, stone);
         assertNotEquals(canAddFirst, canAddSecond);
     }
 
@@ -39,9 +39,9 @@ public class BoardSpec {
         board.addField(to, new Field());
 
         Stone stone = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
-        board.placeTile(from, stone);
+        board.placeStone(from, stone);
 
-        board.moveTile(from, to);
+        board.moveStone(from, to);
         assertTrue(board.fields.get(to).containsStone(stone));
     }
 
@@ -56,9 +56,9 @@ public class BoardSpec {
         Stone spider = new Stone(Hive.Player.WHITE, Hive.Tile.SPIDER);
         Stone ant = new Stone(Hive.Player.BLACK, Hive.Tile.GRASSHOPPER);
 
-        board.placeTile(coord, beetle);
-        board.placeTile(coord, spider);
-        board.placeTile(coord, ant);
+        board.placeStone(coord, beetle);
+        board.placeStone(coord, spider);
+        board.placeStone(coord, ant);
 
         Stone[] stones = new Stone[3];
         stones[0] = beetle;
@@ -77,11 +77,11 @@ public class BoardSpec {
         board.addField(to, new Field());
 
         Stone blackBeetle = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
-        board.placeTile(from, blackBeetle);
+        board.placeStone(from, blackBeetle);
         Stone whiteBeetle = new Stone(Hive.Player.WHITE, Hive.Tile.BEETLE);
-        board.placeTile(from, whiteBeetle);
+        board.placeStone(from, whiteBeetle);
 
-        board.moveTile(from, to);
+        board.moveStone(from, to);
         Stone[] stones = new Stone[] {blackBeetle};
         assertArrayEquals(stones, board.fields.get(from).getStones());
     }

@@ -11,7 +11,7 @@ public class ShiftSpec {
         Board board = new Board();
         Stone queenBeeStone = new Stone(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE);
 
-        board.placeTile(new Coord(0, 0), queenBeeStone);
+        board.placeStone(new Coord(0, 0), queenBeeStone);
 
         board.shiftStone(new Coord(0, 0), new Coord(0, 1));
 
@@ -29,9 +29,31 @@ public class ShiftSpec {
         Coord from = new Coord(0, 0);
         Coord to = new Coord(1, -1);
 
-        board.placeTile(from, stone);
-        board.placeTile(new Coord(0, -1), new Stone(Hive.Player.BLACK, Hive.Tile.QUEEN_BEE));
-        board.placeTile(new Coord(1, 0), new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE));
+        board.placeStone(from, stone);
+        board.placeStone(new Coord(0, -1), new Stone(Hive.Player.BLACK, Hive.Tile.QUEEN_BEE));
+        board.placeStone(new Coord(1, 0), new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE));
+        board.placeStone(new Coord(1, 0), new Stone(Hive.Player.WHITE, Hive.Tile.BEETLE));
+        assertFalse(Move.isValidMove(board, from, to));
+    }
+
+    // 6c
+    @Test
+    void stoneHasToBeConnectedWhileShifting() {
+        Board board = new Board();
+        Coord from = new Coord(-1, 1);
+        Coord to = new Coord(0, 1);
+
+        // -1 +1
+        board.placeStone(new Coord(-1, 1), new Stone(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE));
+        // -1  0
+        board.placeStone(new Coord(-1, 0), new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE));
+        //  0 -1
+        board.placeStone(new Coord(0, -1), new Stone(Hive.Player.WHITE, Hive.Tile.BEETLE));
+        // +1 -1
+        board.placeStone(new Coord(1, -1), new Stone(Hive.Player.BLACK, Hive.Tile.GRASSHOPPER));
+        // +1  0
+        board.placeStone(new Coord(1, 0), new Stone(Hive.Player.WHITE, Hive.Tile.SPIDER));
+
         assertFalse(Move.isValidMove(board, from, to));
     }
 }

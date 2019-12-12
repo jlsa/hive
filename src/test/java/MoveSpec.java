@@ -12,8 +12,8 @@ public class MoveSpec {
 
         Board board = new Board();
         Coord from = new Coord(0, 0);
-        board.placeTile(from, new Stone(whitePlayer.getPlayerColor(), Hive.Tile.BEETLE));
-        board.placeTile(new Coord(0, 1), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.SOLDIER_ANT));
+        board.placeStone(from, new Stone(whitePlayer.getPlayerColor(), Hive.Tile.BEETLE));
+        board.placeStone(new Coord(0, 1), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.SOLDIER_ANT));
 
         HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
         assertThrows(Hive.IllegalMove.class, () -> {
@@ -29,8 +29,8 @@ public class MoveSpec {
 
         Board board = new Board();
         Coord from = new Coord(0, 0);
-        board.placeTile(from, new Stone(whitePlayer.getPlayerColor(), Hive.Tile.BEETLE));
-        board.placeTile(new Coord(0, 1), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.SOLDIER_ANT));
+        board.placeStone(from, new Stone(whitePlayer.getPlayerColor(), Hive.Tile.BEETLE));
+        board.placeStone(new Coord(0, 1), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.SOLDIER_ANT));
 
         HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
         assertThrows(Hive.IllegalMove.class, () -> {
@@ -47,8 +47,8 @@ public class MoveSpec {
         Board board = new Board();
         Coord from = new Coord(0, 0);
         Coord to = new Coord(0, 3);
-        board.placeTile(from, new Stone(whitePlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE));
-        board.placeTile(new Coord(0, 1), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE));
+        board.placeStone(from, new Stone(whitePlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE));
+        board.placeStone(new Coord(0, 1), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE));
 
         HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
 
@@ -68,12 +68,12 @@ public class MoveSpec {
         Coord from = new Coord(-2, 2);
         Coord to = new Coord(-1, 1);
 
-        board.placeTile(new Coord(-1, 0), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE));
-        board.placeTile(new Coord(-1, 1), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE));
-        board.placeTile(new Coord(-1, 2), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.SOLDIER_ANT));
-        board.placeTile(new Coord(-4, 3), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.BEETLE));
-        board.placeTile(new Coord(-1, 4), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.GRASSHOPPER));
-        board.placeTile(new Coord(-1, 5), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.SPIDER));
+        board.placeStone(new Coord(-1, 0), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE));
+        board.placeStone(new Coord(-1, 1), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.QUEEN_BEE));
+        board.placeStone(new Coord(-1, 2), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.SOLDIER_ANT));
+        board.placeStone(new Coord(-4, 3), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.BEETLE));
+        board.placeStone(new Coord(-1, 4), new Stone(whitePlayer.getPlayerColor(), Hive.Tile.GRASSHOPPER));
+        board.placeStone(new Coord(-1, 5), new Stone(blackPlayer.getPlayerColor(), Hive.Tile.SPIDER));
 
         HiveGame game = new HiveGame(whitePlayer, blackPlayer, board);
 

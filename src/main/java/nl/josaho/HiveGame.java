@@ -43,7 +43,7 @@ public class HiveGame implements Hive {
             throw new IllegalMove("There is a tile placed already.");
         }
 
-        board.placeTile(new Coord(q, r), new Stone(currentPlayer.getPlayerColor(), tile));
+        board.placeStone(new Coord(q, r), new Stone(currentPlayer.getPlayerColor(), tile));
         switchPlayer();
     }
 
