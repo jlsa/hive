@@ -26,20 +26,20 @@ public class Field {
     }
 
 
-    public void addTile(Stone stone) {
+    public void addStone(Stone stone) {
         if (!this.stones.contains(stone)) {
             this.stones.push(stone);
         }
     }
 
-    public Stone popTile()
+    public Stone popStone()
     {
         return this.stones.pop();
     }
 
-    public Stone peekTile() { return this.stones.peek(); }
+    public Stone peekStone() { return this.stones.peek(); }
 
-    public boolean containsTile(Stone stone) {
+    public boolean containsStone(Stone stone) {
         return this.stones.contains(stone);
     }
 
@@ -57,5 +57,9 @@ public class Field {
         int result = Objects.hash(stones);
         result = 31 * result + Arrays.hashCode(neighbors);
         return result;
+    }
+
+    public int height() {
+        return this.stones.size();
     }
 }

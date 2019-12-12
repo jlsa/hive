@@ -42,7 +42,7 @@ public class BoardSpec {
         board.placeTile(from, stone);
 
         board.moveTile(from, to);
-        assertTrue(board.fields.get(to).containsTile(stone));
+        assertTrue(board.fields.get(to).containsStone(stone));
     }
 
     @Test

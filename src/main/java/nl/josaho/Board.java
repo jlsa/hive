@@ -17,6 +17,9 @@ public class Board {
     }
 
     public Field get(Coord coord) {
+        if (fields.get(coord) == null) {
+            addField(coord);
+        }
         return fields.get(coord);
     }
 
@@ -35,7 +38,7 @@ public class Board {
 
         if (!hasTileBeenPlacedAlready(stone.getTileType(), stone.getColor())) {
             Field field = fields.get(coord);
-            field.addTile(stone);
+            field.addStone(stone);
             return true;
         }
 
@@ -55,14 +58,18 @@ public class Board {
             addField(to);
         }
         Field toField = get(to);
-        toField.addTile(fromField.popTile());
+        toField.addStone(fromField.popStone());
         fields.replace(to, get(to), toField);
+    }
+
+    public void shiftStone(Coord from, Coord to) {
+        moveTile(from, to);
     }
 
     public boolean hasTileBeenPlacedAlready(Hive.Tile tile, Hive.Player player) {
         Stone stone = new Stone(player, tile);
         for (Field f: fields.values()) {
-            if (f.containsTile(stone)) {
+            if (f.containsStone(stone)) {
                 return true;
             }
         }

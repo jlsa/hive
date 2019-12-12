@@ -1,9 +1,7 @@
 package nl.josaho;
 import nl.hanze.hive.Hive;
 
-import java.lang.reflect.Array;
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class HiveGame implements Hive {
     public Board board;
@@ -74,7 +72,7 @@ public class HiveGame implements Hive {
 
         if (field != null) {
             if (field.hasStones()) {
-                Stone stone = field.peekTile();
+                Stone stone = field.peekStone();
                 if (stone != null) {
                     if (stone.getColor() == opponent.getPlayerColor()) {
                         throw new IllegalMove("Not allowed to move a tile that is not your own.");
@@ -191,7 +189,7 @@ public class HiveGame implements Hive {
         for (Map.Entry<Coord, Field> entry : board.getFields().entrySet()) {
             Field field = entry.getValue();
 
-            if (field.containsTile(queenStone)) {
+            if (field.containsStone(queenStone)) {
                 return true;
             }
         }

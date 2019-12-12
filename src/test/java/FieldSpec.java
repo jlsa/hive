@@ -16,7 +16,7 @@ public class FieldSpec {
     void FieldCanAddTile() {
         Stone stone = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
         Field field = new Field();
-        field.addTile(stone);
+        field.addStone(stone);
         assertArrayEquals(new Stone[] {stone}, field.getStones());
     }
 
@@ -24,8 +24,8 @@ public class FieldSpec {
     void FieldCanRemoveTile() {
         Stone stone = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
         Field field = new Field();
-        field.addTile(stone);
-        field.popTile();
+        field.addStone(stone);
+        field.popStone();
         assertArrayEquals(new Stone[] {}, field.getStones());
     }
 
@@ -33,8 +33,8 @@ public class FieldSpec {
     void FieldCanContainTileOnlyOnce() {
         Stone stone = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
         Field field = new Field();
-        field.addTile(stone);
-        field.addTile(stone);
+        field.addStone(stone);
+        field.addStone(stone);
         assertArrayEquals(new Stone[] {stone}, field.getStones());
     }
 
@@ -42,7 +42,7 @@ public class FieldSpec {
     void FieldHasTileThenTrue() {
         Stone stone = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
         Field field = new Field();
-        field.addTile(stone);
-        assertTrue(field.containsTile(stone));
+        field.addStone(stone);
+        assertTrue(field.containsStone(stone));
     }
 }
