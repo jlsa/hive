@@ -1,6 +1,9 @@
 import nl.hanze.hive.Hive;
 import nl.josaho.*;
 import org.junit.jupiter.api.*;
+
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardSpec {
@@ -17,7 +20,7 @@ public class BoardSpec {
 
     // same(===) is not equals
     @Test
-    void TileCanOnlyBeInOneField() {
+    void StoneCanOnlyBeInOneField() {
         Board board = new Board();
         Coord positionOne = new Coord(2, 1);
         Coord positionTwo = new Coord(3, 1);
@@ -31,22 +34,23 @@ public class BoardSpec {
     }
 
     @Test
-    void TileCanBeMovedFromFieldToField() {
+    void StoneCanBeMovedFromFieldToField() {
+        int offset = 10;
+
         Board board = new Board();
-        Coord from = new Coord(0, 0);
-        Coord to = new Coord(0, 1);
-        board.addField(from, new Field());
-        board.addField(to, new Field());
+        Coord from = new Coord(offset + 0, offset + 0);
+        Coord to = new Coord(offset + 0, offset + 1);
 
         Stone stone = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
         board.placeStone(from, stone);
+        board.placeStone(new Coord(offset + 1, offset + 0), new Stone(Hive.Player.WHITE, Hive.Tile.SPIDER));
 
         board.moveStone(from, to);
-        assertTrue(board.fields.get(to).containsStone(stone));
+        assertTrue(board.get(to).containsStone(stone));
     }
 
     @Test
-    void TilesCanStack() {
+    void StonesCanStack() {
         // need to edit field.popTile as it should be able to stack tiles.
         Board board = new Board();
         Coord coord = new Coord(0, 0);
@@ -65,24 +69,25 @@ public class BoardSpec {
         stones[1] = spider;
         stones[2] = ant;
 
-        assertArrayEquals(stones, board.fields.get(coord).getStones());
+        assertArrayEquals(stones, board.get(coord).getStones());
     }
 
     @Test
-    void OnlyMoveTopTileFromStack() {
+    void OnlyMoveTopStoneFromStack() {
         Board board = new Board();
         Coord from = new Coord(0, 0);
         Coord to = new Coord(0, 1);
-        board.addField(from, new Field());
-        board.addField(to, new Field());
 
         Stone blackBeetle = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
-        board.placeStone(from, blackBeetle);
         Stone whiteBeetle = new Stone(Hive.Player.WHITE, Hive.Tile.BEETLE);
+
+        board.placeStone(from, blackBeetle);
         board.placeStone(from, whiteBeetle);
+        board.placeStone(new Coord(1, 0), new Stone(Hive.Player.BLACK, Hive.Tile.GRASSHOPPER));
 
         board.moveStone(from, to);
-        Stone[] stones = new Stone[] {blackBeetle};
-        assertArrayEquals(stones, board.fields.get(from).getStones());
+
+        Stone[] stones = new Stone[] { blackBeetle };
+        assertArrayEquals(stones, board.get(from).getStones());
     }
 }

@@ -1,29 +1,31 @@
 package nl.josaho.stones;
 
 import nl.hanze.hive.Hive;
-import nl.josaho.Board;
-import nl.josaho.Coord;
-import nl.josaho.Field;
-import nl.josaho.Stone;
+import nl.josaho.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Move {
-
-    public static Board Shift(Board board, Coord from, Coord to) {
-
-        return board;
-    }
 
     public static boolean isValidMove(Board board, Coord from, Coord to) {
         Stone stone = board.get(from).peekStone();
 
         if (stone.getTileType().equals(Hive.Tile.QUEEN_BEE)) {
             return QueenBeeMove.isMoveAllowed(board, from, to);
+        }
+        if (stone.getTileType().equals(Hive.Tile.GRASSHOPPER)) {
+            return GrasshopperMove.isMoveAllowed(board, from, to);
+        }
+        if (stone.getTileType().equals(Hive.Tile.SOLDIER_ANT)) {
+            return SoldierAntMove.isMoveAllowed(board, from, to);
+        }
+        if (stone.getTileType().equals(Hive.Tile.BEETLE)) {
+            return BeetleMove.isMoveAllowed(board, from, to);
+        }
+        if (stone.getTileType().equals(Hive.Tile.SPIDER)) {
+            return SpiderMove.isMoveAllowed(board, from, to);
         }
 
         return false;
@@ -46,16 +48,7 @@ public class Move {
             maxi = Math.max(a.height() - 1, b.height());
         }
 
-        boolean isInShiftRange = inShiftRange(board, from, to);
-        boolean connectedDuringShifting = isShiftConnected(board, from, to);
-        return (mini <= maxi) && isInShiftRange && connectedDuringShifting;
-    }
-
-    public static boolean inShiftRange(Board board, Coord from, Coord to) {
-        // check for distance, if its bigger than one always fail
-        Coord diff = new Coord(Math.abs(from.q - to.q), Math.abs(from.r - to.r));
-        System.out.println("diff: " + diff.toString());
-        return diff.q > 1 || diff.r > 1;
+        return (mini <= maxi) && isShiftConnected(board, from, to);
     }
 
     public static boolean isShiftConnected(Board board, Coord from, Coord to) {

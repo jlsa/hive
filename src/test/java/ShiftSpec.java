@@ -7,13 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ShiftSpec {
     // 6a
     @Test
-    void StoneMovesByShifting() {
+    void stoneMovesByShifting() {
         Board board = new Board();
         Stone queenBeeStone = new Stone(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE);
 
         board.placeStone(new Coord(0, 0), queenBeeStone);
+        board.placeStone(new Coord(1, 0), new Stone(Hive.Player.WHITE, Hive.Tile.GRASSHOPPER));
 
-        board.shiftStone(new Coord(0, 0), new Coord(0, 1));
+        board.moveStone(new Coord(0, 0), new Coord(0, 1));
 
         Field f = board.get(new Coord(0, 1));
         Stone expectedTile = new Stone(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE);
@@ -60,6 +61,6 @@ public class ShiftSpec {
     // 7a
     @Test
     void beetleMove() {
-
+        // ha
     }
 }

@@ -51,4 +51,9 @@ public class Stone {
         result = 31 * result + Arrays.hashCode(edges);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "{" + playerColor.toString() + ", " + tileType.toString() + "}";
+    }
 }

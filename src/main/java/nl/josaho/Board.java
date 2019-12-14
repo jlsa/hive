@@ -1,6 +1,7 @@
 package nl.josaho;
 
 import nl.hanze.hive.Hive;
+import nl.josaho.stones.Move;
 
 import java.util.*;
 
@@ -46,24 +47,27 @@ public class Board {
     }
 
     public void moveStone(Coord from, Coord to) {
+
         if (fields.get(from) == null) {
             return;
         }
+
         Field fromField = fields.get(from);
         if (fromField.getStones().length == 0) {
+            return;
+        }
+
+        if (!Move.isValidMove(this, from, to)) {
             return;
         }
 
         if (fields.get(to) == null) {
             addField(to);
         }
+
         Field toField = get(to);
         toField.addStone(fromField.popStone());
         fields.replace(to, get(to), toField);
-    }
-
-    public void shiftStone(Coord from, Coord to) {
-        moveStone(from, to);
     }
 
     public boolean hasTileBeenPlacedAlready(Hive.Tile tile, Hive.Player player) {
