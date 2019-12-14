@@ -12,19 +12,19 @@ public class Move {
     public static boolean isValidMove(Board board, Coord from, Coord to) {
         Stone stone = board.get(from).peekStone();
 
-        if (stone.getTileType().equals(Hive.Tile.QUEEN_BEE)) {
+        if (stone.getTile().equals(Hive.Tile.QUEEN_BEE)) {
             return QueenBeeMove.isMoveAllowed(board, from, to);
         }
-        if (stone.getTileType().equals(Hive.Tile.GRASSHOPPER)) {
+        if (stone.getTile().equals(Hive.Tile.GRASSHOPPER)) {
             return GrasshopperMove.isMoveAllowed(board, from, to);
         }
-        if (stone.getTileType().equals(Hive.Tile.SOLDIER_ANT)) {
+        if (stone.getTile().equals(Hive.Tile.SOLDIER_ANT)) {
             return SoldierAntMove.isMoveAllowed(board, from, to);
         }
-        if (stone.getTileType().equals(Hive.Tile.BEETLE)) {
+        if (stone.getTile().equals(Hive.Tile.BEETLE)) {
             return BeetleMove.isMoveAllowed(board, from, to);
         }
-        if (stone.getTileType().equals(Hive.Tile.SPIDER)) {
+        if (stone.getTile().equals(Hive.Tile.SPIDER)) {
             return SpiderMove.isMoveAllowed(board, from, to);
         }
 

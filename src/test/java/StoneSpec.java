@@ -32,30 +32,30 @@ public class StoneSpec {
     @Test
     void givenQueenTileWhenGetTileThenEqual() {
         Stone stone = new Stone(Player.BLACK, Tile.QUEEN_BEE);
-        assertEquals(Tile.QUEEN_BEE, stone.getTileType());
+        assertEquals(Tile.QUEEN_BEE, stone.getTile());
     }
 
     @Test
     void givenSpiderTileWhenGetTileThenEqual() {
         Stone stone = new Stone(Player.BLACK, Tile.SPIDER);
-        assertEquals(Tile.SPIDER, stone.getTileType());
+        assertEquals(Tile.SPIDER, stone.getTile());
     }
 
     @Test
     void givenBeetleTileWhenGetTileThenEqual() {
         Stone stone = new Stone(Player.BLACK, Tile.BEETLE);
-        assertEquals(Tile.BEETLE, stone.getTileType());
+        assertEquals(Tile.BEETLE, stone.getTile());
     }
 
     @Test
     void givenGrashopperTileWhenGetTileThenEqual() {
         Stone stone = new Stone(Player.BLACK, Tile.GRASSHOPPER);
-        assertEquals(Tile.GRASSHOPPER, stone.getTileType());
+        assertEquals(Tile.GRASSHOPPER, stone.getTile());
     }
 
     @Test
     void givenSoldierAntTileWhenGetTileThenEqual() {
         Stone stone = new Stone(Player.BLACK, Tile.SOLDIER_ANT);
-        assertEquals(Tile.SOLDIER_ANT, stone.getTileType());
+        assertEquals(Tile.SOLDIER_ANT, stone.getTile());
     }
 }

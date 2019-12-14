@@ -36,7 +36,7 @@ public class Board {
             addField(coord, new Field());
         }
 
-        if (!hasTileBeenPlacedAlready(stone.getTileType(), stone.getColor())) {
+        if (!hasTileBeenPlacedAlready(stone.getTile(), stone.getColor())) {
             Field field = fields.get(coord);
             field.addStone(stone);
             stonesPlayed++;

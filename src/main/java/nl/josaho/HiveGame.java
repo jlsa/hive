@@ -35,7 +35,7 @@ public class HiveGame implements Hive {
             throw new IllegalMove("Player has to play queen.");
         }
 
-        if (!tileIsFromPlayer(tile, currentPlayer)) {
+        if (!stoneIsFromPlayer(tile, currentPlayer)) {
             throw new IllegalMove("Tile is not from player");
         }
 
@@ -61,7 +61,7 @@ public class HiveGame implements Hive {
         Coord from = new Coord(fromQ, fromR);
         Coord to = new Coord(toQ, toR);
 
-        if (!isTileConnected(to)) {
+        if (!isStoneConnected(to)) {
             throw new IllegalMove("Your tile has to be attached to another tile");
         }
         if (!playerHasPlayedQueen(currentPlayer)) {
@@ -150,7 +150,7 @@ public class HiveGame implements Hive {
 
             for (Stone stone : field.getStones()) {
                 if (stone.getColor() == currentPlayer.getPlayerColor()) {
-                    if (stone.getTileType() == Hive.Tile.QUEEN_BEE) {
+                    if (stone.getTile() == Hive.Tile.QUEEN_BEE) {
                         return false;
                     }
                     stones.add((stone));
@@ -164,9 +164,9 @@ public class HiveGame implements Hive {
         return false;
     }
 
-    private boolean tileIsFromPlayer(Tile tile, nl.josaho.Player player) {
+    private boolean stoneIsFromPlayer(Tile tile, nl.josaho.Player player) {
         for (Stone stone : player.getStones()) {
-            if (stone.getTileType() == tile) {
+            if (stone.getTile() == tile) {
                 return true;
             }
         }
@@ -195,7 +195,7 @@ public class HiveGame implements Hive {
         return false;
     }
 
-    private boolean isTileConnected(Coord coord) {
+    private boolean isStoneConnected(Coord coord) {
         for (Coord c : coord.getNeighborCoords()) {
             Field field = board.getFields().get(c);
             if (field != null) {

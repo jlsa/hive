@@ -40,7 +40,7 @@ public class MoveSpec {
 
     // 5c
     @Test
-    void tileHasToBeConnectedToAtleastOneOtherTile() throws Hive.IllegalMove {
+    void stoneHasToBeConnectedToAtleastOneOtherStone() throws Hive.IllegalMove {
         Player whitePlayer = new Player(Hive.Player.WHITE);
         Player blackPlayer = new Player(Hive.Player.BLACK);
 

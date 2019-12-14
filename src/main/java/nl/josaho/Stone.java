@@ -31,7 +31,7 @@ public class Stone {
         return edges.clone();
     }
 
-    public Hive.Tile getTileType() {
+    public Hive.Tile getTile() {
         return tileType;
     }
 
