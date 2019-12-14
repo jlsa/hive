@@ -57,10 +57,4 @@ public class ShiftSpec {
 
         assertFalse(Move.isValidMove(board, from, to));
     }
-
-    // 7a
-    @Test
-    void beetleMove() {
-        // ha
-    }
 }

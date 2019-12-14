@@ -48,7 +48,7 @@ public class Move {
             maxi = Math.max(a.height() - 1, b.height());
         }
 
-        return (mini <= maxi) && isShiftConnected(board, from, to);
+        return (mini <= maxi);
     }
 
     public static boolean isShiftConnected(Board board, Coord from, Coord to) {
