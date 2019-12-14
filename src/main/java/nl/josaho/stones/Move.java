@@ -81,4 +81,9 @@ public class Move {
 
         return false;
     }
+
+    public static boolean inShiftRange(Board board, Coord from, Coord to, int range) {
+        Coord diff = new Coord(Math.abs(from.q - to.q), Math.abs(from.r - to.r));
+        return diff.q <= range && diff.r <= range;
+    }
 }
