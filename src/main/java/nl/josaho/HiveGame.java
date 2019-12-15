@@ -1,5 +1,6 @@
 package nl.josaho;
 import nl.hanze.hive.Hive;
+import nl.josaho.stones.Move;
 
 import java.util.*;
 
@@ -106,8 +107,18 @@ public class HiveGame implements Hive {
     }
 
     public boolean isQueenSurrounded(nl.josaho.Player player) {
-        // fix this! It is not checking for surrounding tiles
-        return playerHasPlayedQueen(player);
+        Stone queenStone = new Stone(player.getPlayerColor(), Hive.Tile.QUEEN_BEE);
+        for (Map.Entry<Coord, Field> entry : board.getFields().entrySet()) {
+            Field field = entry.getValue();
+            Coord coord = entry.getKey();
+
+            if (field.containsStone(queenStone)) {
+                if (Move.isSurrounded(board, coord)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     /**
      * Check whether the given player is the winner.

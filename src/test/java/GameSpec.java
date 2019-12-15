@@ -145,7 +145,7 @@ public class GameSpec {
 
     // 4b
     @Test
-    void firstTileHasToBePlacedOnAnEmptyField() {
+    void firstStoneHasToBePlacedOnAnEmptyField() {
         Player whitePlayer = new Player(Hive.Player.WHITE);
         Player blackPlayer = new Player(Hive.Player.BLACK);
         Board board = new Board();

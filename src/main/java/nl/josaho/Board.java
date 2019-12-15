@@ -53,7 +53,7 @@ public class Board {
         }
 
         Field fromField = fields.get(from);
-        if (fromField.getStones().length == 0) {
+        if (fromField.height() == 0) {
             return;
         }
 
@@ -98,7 +98,7 @@ public class Board {
         return visited.size() == stonesPlayed;
     }
 
-    private void recursiveSearchConnectedStones(Coord start, ArrayList<Coord> visited) {
+    public void recursiveSearchConnectedStones(Coord start, ArrayList<Coord> visited) {
         for (Coord c : start.getNeighborCoords()) {
             Field f = get(c);
 
@@ -109,5 +109,16 @@ public class Board {
                 }
             }
         }
+    }
+
+    public static ArrayList<Coord> getNeighborWithStones(Board board, Coord coord) {
+        ArrayList<Coord> neighbors = new ArrayList<>();
+        for (Coord c: coord.getNeighborCoords()) {
+            Field f = board.get(c);
+            if (f.hasStones()) {
+                neighbors.add(c);
+            }
+        }
+        return neighbors;
     }
 }

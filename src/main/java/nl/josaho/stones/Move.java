@@ -86,4 +86,22 @@ public class Move {
         Coord diff = new Coord(Math.abs(from.q - to.q), Math.abs(from.r - to.r));
         return diff.q <= range && diff.r <= range;
     }
+
+    public static boolean isSurrounded(Board board, Coord coord) {
+        int count = 0;
+
+        for (Coord neighbor : coord.getNeighborCoords()) {
+            Field f = board.get(neighbor);
+            if (f.hasStones()) {
+                count++;
+            }
+        }
+
+        if (count >= 5) {
+            return true;
+        }
+
+        return false;
+    }
+
 }
