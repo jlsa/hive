@@ -5,8 +5,16 @@ import nl.josaho.Coord;
 import nl.josaho.Field;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
+// Spider Move!
+// Spider Move!
+// Does whatever a Spider Move does!
+// Can it swing from a web?
+
+// No it can't
+// It's a Move
+// Lookout!
+// It's the Spider Move!!
 public class SpiderMove {
     public static boolean isMoveAllowed(Board board, Coord from, Coord to) {
 
