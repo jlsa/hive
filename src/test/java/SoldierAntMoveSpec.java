@@ -26,7 +26,6 @@ public class SoldierAntMoveSpec {
         board.placeStone(from, soldierAnt);
 
         board.moveStone(from, to);
-        System.out.println(board.get(to).peekStone().toString());
         assertEquals(soldierAnt, board.get(to).peekStone());
     }
 

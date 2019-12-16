@@ -47,7 +47,6 @@ public class Board {
     }
 
     public void moveStone(Coord from, Coord to) {
-
         if (fields.get(from) == null) {
             return;
         }
@@ -58,6 +57,7 @@ public class Board {
         }
 
         if (!Move.isValidMove(this, from, to)) {
+            System.out.println("Not a valid move");
             return;
         }
 
