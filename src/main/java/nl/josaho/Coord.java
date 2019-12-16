@@ -40,6 +40,6 @@ public class Coord {
 
     @Override
     public String toString() {
-        return "{" + q + ", " + r + "}";
+        return "{ q: " + q + ", r: " + r + " }";
     }
 }

@@ -1,8 +1,6 @@
 package nl.josaho.stones;
 
-import nl.josaho.Board;
-import nl.josaho.Coord;
-import nl.josaho.Field;
+import nl.josaho.*;
 
 import java.util.*;
 
@@ -17,30 +15,15 @@ import java.util.*;
 // It's the Spider Move!!
 public class SpiderMove {
     public static boolean isMoveAllowed(Board board, Coord from, Coord to) {
-
         // from the get-go check if destination is starting position
         if (from.equals(to)) {
             return false;
         }
 
         Stack<Coord> path = BFS(board, from, to);
-        System.out.println(path.size());
         if (path.size() == 3) {
             return true;
         }
-
-//        ArrayList<Coord> visited = new ArrayList<>();
-//        Move.recursiveFindPathToDestination(board, visited, from, to);
-//
-//        System.out.println("from " + from + " to " + to);
-//        for (Coord c: visited) {
-//            System.out.println(visited.indexOf(c) + " -> " + c);
-//        }
-//
-//        if (visited.contains(to)) {
-//            System.out.println(visited.indexOf(to));
-//            return true;
-//        }
 
         return false;
     }
