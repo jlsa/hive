@@ -61,7 +61,7 @@ public class Player {
         return false;
     }
 
-    public void playStone(Hive.Tile tile) {
+    public Stone playStone(Hive.Tile tile) {
         int i = 0;
         boolean foundStone = false;
         for (Stone s : stones) {
@@ -72,7 +72,11 @@ public class Player {
             i++;
         }
         if (foundStone) {
+            Stone stone = stones.get(i);
             stones.remove(i);
+            return stone;
         }
+
+        return null;
     }
 }

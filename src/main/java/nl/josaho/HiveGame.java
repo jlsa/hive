@@ -30,31 +30,30 @@ public class HiveGame implements Hive {
     @Override
     public void play(Tile tile, int q, int r) throws IllegalMove {
         if (currentPlayer.amountOfStonesOfTile(tile) == 0) {
-            System.out.println("oops empty");
             throw new IllegalMove("You do not own any of these tiles anymore");
         }
-        System.out.println("1");
+
         if (playerHasToPlayQueen()) {
             throw new IllegalMove("Player has to play queen.");
         }
-        System.out.println("2");
+
         if (!stoneIsFromPlayer(tile, currentPlayer)) {
             throw new IllegalMove("Tile is not from player");
         }
-        System.out.println("3");
+
         if (fieldIsEmpty(new Coord(q, r))) {
             throw new IllegalMove("There is a tile placed already.");
         }
-        System.out.println("4");
-        if (board.placeStone(new Coord(q, r), new Stone(currentPlayer.getPlayerColor(), tile))) {
-            System.out.println("placing tile");
-            currentPlayer.playStone(tile);
-            System.out.println(currentPlayer.getPlayerColor() + " played stone " + tile);
+
+        Stone stone = currentPlayer.playStone(tile);
+        if (stone == null) {
+            throw new IllegalMove("Cannot play stone from hand of the player");
         }
-        System.out.println("5");
-//        System.out.println(currentPlayer.amountOfStonesOfTile(tile));
+
+        if (!board.placeStone(new Coord(q, r), stone)) {
+            throw new IllegalMove("Place on board failed");
+        }
         switchPlayer();
-        System.out.println("--------\n");
     }
 
     /**

@@ -18,21 +18,6 @@ public class BoardSpec {
         assertTrue(board.getFields().isEmpty());
     }
 
-    // same(===) is not equals
-    @Test
-    void StoneCanOnlyBeInOneField() {
-        Board board = new Board();
-        Coord positionOne = new Coord(2, 1);
-        Coord positionTwo = new Coord(3, 1);
-        board.addField(positionOne, new Field());
-        board.addField(positionTwo, new Field());
-
-        Stone stone = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
-        boolean canAddFirst = board.placeStone(positionOne, stone);
-        boolean canAddSecond = board.placeStone(positionTwo, stone);
-        assertNotEquals(canAddFirst, canAddSecond);
-    }
-
     @Test
     void StoneCanBeMovedFromFieldToField() throws Hive.IllegalMove {
         int offset = 10;

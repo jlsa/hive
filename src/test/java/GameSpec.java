@@ -27,7 +27,6 @@ public class GameSpec {
 
     @Test
     void whenPlayerTriesToPlaceTheSameTileAgainItThrowsAnIllegalMove() throws Hive.IllegalMove {
-        // FAIL!!
         Player whitePlayer = new Player(Hive.Player.WHITE);
         Player blackPlayer = new Player(Hive.Player.BLACK);
         Board board = new Board();
@@ -36,9 +35,9 @@ public class GameSpec {
         Coord coord = new Coord(0, 0);
         game.play(Hive.Tile.BEETLE, coord.q, coord.r);
 
-//        assertThrows(Hive.IllegalMove.class, () -> {
+        assertThrows(Hive.IllegalMove.class, () -> {
             game.play(Hive.Tile.BEETLE, coord.q, coord.r);
-//        });
+        });
     }
 
     // 3b.1
