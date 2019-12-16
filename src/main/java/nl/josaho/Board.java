@@ -46,19 +46,18 @@ public class Board {
         return false;
     }
 
-    public void moveStone(Coord from, Coord to) {
+    public void moveStone(Coord from, Coord to) throws Hive.IllegalMove {
         if (fields.get(from) == null) {
-            return;
+            throw new Hive.IllegalMove("Field is empty");
         }
 
         Field fromField = fields.get(from);
         if (fromField.height() == 0) {
-            return;
+            throw new Hive.IllegalMove("There are no stones to throw");
         }
 
         if (!Move.isValidMove(this, from, to)) {
-            System.out.println("Not a valid move");
-            return;
+            throw new Hive.IllegalMove("Invalid Move!");
         }
 
         if (fields.get(to) == null) {

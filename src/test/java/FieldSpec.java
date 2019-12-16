@@ -9,7 +9,7 @@ public class FieldSpec {
     @Test
     void FieldHasSixNeighbors() {
         Field field = new Field();
-        assertEquals(6, field.getNeighbors().length, "Field has six neighbors");
+        assertEquals(6, field.getNeighbors().length);
     }
 
     @Test

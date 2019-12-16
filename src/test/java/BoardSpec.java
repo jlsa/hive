@@ -34,7 +34,7 @@ public class BoardSpec {
     }
 
     @Test
-    void StoneCanBeMovedFromFieldToField() {
+    void StoneCanBeMovedFromFieldToField() throws Hive.IllegalMove {
         int offset = 10;
 
         Board board = new Board();
@@ -73,7 +73,7 @@ public class BoardSpec {
     }
 
     @Test
-    void OnlyMoveTopStoneFromStack() {
+    void OnlyMoveTopStoneFromStack() throws Hive.IllegalMove {
         Board board = new Board();
         Coord from = new Coord(0, 0);
         Coord to = new Coord(0, 1);

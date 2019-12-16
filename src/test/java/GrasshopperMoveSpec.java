@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GrasshopperMoveSpec {
     @Test
 //    @DisplayName("Requirement 11a.1")
-    void grasshopperMovesInStraightLine() {
+    void grasshopperMovesInStraightLine() throws Hive.IllegalMove {
         Board board = new Board();
         Coord from = new Coord(-1, 0);
         Coord to = new Coord(-3, 2);
@@ -56,7 +56,10 @@ public class GrasshopperMoveSpec {
 
         board.placeStone(from, grasshopper);
 
-        assertFalse(Move.isValidMove(board, from, to));
+        assertThrows(Hive.IllegalMove.class, () -> {
+            board.moveStone(from, to);
+        });
+//        assertFalse(Move.isValidMove(board, from, to));
     }
 
     @Test

@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SpiderMoveSpec {
     @Test
-    void spiderCanOnlyMoveOverEmptyFields() {
+    void spiderCanOnlyMoveOverEmptyFields() throws Hive.IllegalMove {
         Board board = new Board();
         Stone spider = new Stone(Hive.Player.BLACK, Hive.Tile.SPIDER);
         Coord from = new Coord(1, -1);
@@ -24,13 +24,12 @@ public class SpiderMoveSpec {
         board.placeStone(from, spider);
 
         board.moveStone(from, to);
-        System.out.println(board.get(from).height());
-        System.out.println(board.get(to).height());
+
         assertEquals(spider, board.get(to).peekStone());
     }
 
     @Test
-    void spiderCanNotMoveLessThanThreeSteps() {
+    void spiderCanNotMoveLessThanThreeSteps() throws Hive.IllegalMove {
         Board board = new Board();
         Stone spider = new Stone(Hive.Player.BLACK, Hive.Tile.SPIDER);
         Coord from = new Coord(1, -1);
@@ -47,7 +46,9 @@ public class SpiderMoveSpec {
         board.placeStone(new Coord(1, 0), new Stone(Hive.Player.WHITE, Hive.Tile.SPIDER));
         board.placeStone(from, spider);
 
-        assertFalse(Move.isValidMove(board, from, to));
+        assertThrows(Hive.IllegalMove.class, () -> {
+            board.moveStone(from, to);
+        });
     }
 
     @Test
@@ -68,12 +69,17 @@ public class SpiderMoveSpec {
         board.placeStone(new Coord(1, 0), new Stone(Hive.Player.WHITE, Hive.Tile.SPIDER));
         board.placeStone(from, spider);
 
-        assertFalse(Move.isValidMove(board, from, to));
+        assertThrows(Hive.IllegalMove.class, () -> {
+            board.moveStone(from, to);
+        });
     }
 
     @Test
-    void spiderCantMoveToSpotWhereHeMovesFrom() {
+    void spiderCantMoveToSpotWhereHeMovesFrom() throws Hive.IllegalMove {
         Board board = new Board();
+        Coord from = new Coord(-1, 2);
+        Coord to = new Coord(-1, 2);
+
         board.placeStone(new Coord(1, 0), new Stone(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE));
         board.placeStone(new Coord(-1, 0), new Stone(Hive.Player.WHITE, Hive.Tile.GRASSHOPPER));
         board.placeStone(new Coord(-1, 1), new Stone(Hive.Player.WHITE, Hive.Tile.BEETLE));
@@ -82,6 +88,8 @@ public class SpiderMoveSpec {
         board.placeStone(new Coord(0, 1), new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE));
         board.placeStone(new Coord(-1, 2), new Stone(Hive.Player.BLACK, Hive.Tile.SPIDER));
 
-        assertFalse(Move.isValidMove(board, new Coord(-1, 2), new Coord(-1, 2)));
+        assertThrows(Hive.IllegalMove.class, () -> {
+            board.moveStone(from, to);
+        });
     }
 }
