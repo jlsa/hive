@@ -29,23 +29,32 @@ public class HiveGame implements Hive {
      */
     @Override
     public void play(Tile tile, int q, int r) throws IllegalMove {
-        if (board.hasTileBeenPlacedAlready(tile, currentPlayer.getPlayerColor())) {
-            throw new IllegalMove("Tile had already been placed. Can't be placed multiple times.");
+        if (currentPlayer.amountOfStonesOfTile(tile) == 0) {
+            System.out.println("oops empty");
+            throw new IllegalMove("You do not own any of these tiles anymore");
         }
+        System.out.println("1");
         if (playerHasToPlayQueen()) {
             throw new IllegalMove("Player has to play queen.");
         }
-
+        System.out.println("2");
         if (!stoneIsFromPlayer(tile, currentPlayer)) {
             throw new IllegalMove("Tile is not from player");
         }
-
+        System.out.println("3");
         if (fieldIsEmpty(new Coord(q, r))) {
             throw new IllegalMove("There is a tile placed already.");
         }
-
-        board.placeStone(new Coord(q, r), new Stone(currentPlayer.getPlayerColor(), tile));
+        System.out.println("4");
+        if (board.placeStone(new Coord(q, r), new Stone(currentPlayer.getPlayerColor(), tile))) {
+            System.out.println("placing tile");
+            currentPlayer.playStone(tile);
+            System.out.println(currentPlayer.getPlayerColor() + " played stone " + tile);
+        }
+        System.out.println("5");
+//        System.out.println(currentPlayer.amountOfStonesOfTile(tile));
         switchPlayer();
+        System.out.println("--------\n");
     }
 
     /**
@@ -54,7 +63,7 @@ public class HiveGame implements Hive {
      * @param fromQ Q coordinate of the tile to move
      * @param fromR R coordinate of the tile to move
      * @param toQ   Q coordinate of the hexagon to move to
-     * @param toR   R coordinare of the hexagon to move to
+     * @param toR   R coordinate of the hexagon to move to
      * @throws IllegalMove If the tile could not be moved
      */
     @Override
@@ -117,7 +126,7 @@ public class HiveGame implements Hive {
             Coord coord = entry.getKey();
 
             if (field.containsStone(queenStone)) {
-                if (Move.isSurrounded(board, coord)) {
+                if (Move.isSurrounded(board, coord, 6)) {
                     return true;
                 }
             }
@@ -146,7 +155,8 @@ public class HiveGame implements Hive {
      */
     @Override
     public boolean isDraw() {
-        if (isWinner(currentPlayer.getPlayerColor()) && isWinner(opponent.getPlayerColor())) {
+        if (isWinner(Player.BLACK) && isWinner(Player.WHITE)) {
+            System.out.println("draw");
             return true;
         }
         return false;

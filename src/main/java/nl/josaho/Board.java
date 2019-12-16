@@ -70,13 +70,30 @@ public class Board {
     }
 
     public boolean hasTileBeenPlacedAlready(Hive.Tile tile, Hive.Player player) {
+        int count = 0;
+        int maxCount = getTotalAmountOfTilesPossibleOnBoard(tile);
         Stone stone = new Stone(player, tile);
         for (Field f: fields.values()) {
             if (f.containsStone(stone)) {
-                return true;
+                count++;
             }
         }
+        if (count == maxCount) {
+            return true;
+        }
         return false;
+    }
+
+    public boolean canTileTypeBePlaced(Hive.Tile tile, Hive.Player player) {
+        int count = 0;
+        int maxCount = getTotalAmountOfTilesPossibleOnBoard(tile);
+        Stone stone = new Stone(player, tile);
+        for (Field f: fields.values()) {
+            if (f.containsStone(stone)) {
+                count++;
+            }
+        }
+        return count == maxCount;
     }
 
     public boolean boardIsOneSwarm() {
@@ -110,14 +127,18 @@ public class Board {
         }
     }
 
-    public static ArrayList<Coord> getNeighborWithStones(Board board, Coord coord) {
-        ArrayList<Coord> neighbors = new ArrayList<>();
-        for (Coord c: coord.getNeighborCoords()) {
-            Field f = board.get(c);
-            if (f.hasStones()) {
-                neighbors.add(c);
-            }
+    private int getTotalAmountOfTilesPossibleOnBoard(Hive.Tile tile) {
+        switch(tile) {
+            case QUEEN_BEE:
+                return 1;
+            case BEETLE:
+            case SPIDER:
+                return 2;
+            case SOLDIER_ANT:
+            case GRASSHOPPER:
+                return 3;
+            default: // should never arrive here
+                return -1;
         }
-        return neighbors;
     }
 }

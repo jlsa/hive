@@ -29,6 +29,16 @@ public class Player {
         return stones;
     }
 
+    public int amountOfStonesOfTile(Hive.Tile tile) {
+        int amount = 0;
+        for (Stone stone: getStones()) {
+            if (stone.getTile().equals(tile)) {
+                amount++;
+            }
+        }
+        return amount;
+    }
+
     public Hive.Player getPlayerColor() { return playerColor; }
 
     @Override
@@ -49,5 +59,20 @@ public class Player {
             return true;
         }
         return false;
+    }
+
+    public void playStone(Hive.Tile tile) {
+        int i = 0;
+        boolean foundStone = false;
+        for (Stone s : stones) {
+            if (s.getTile().equals(tile)) {
+                foundStone = true;
+                break;
+            }
+            i++;
+        }
+        if (foundStone) {
+            stones.remove(i);
+        }
     }
 }

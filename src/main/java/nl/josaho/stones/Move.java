@@ -87,7 +87,7 @@ public class Move {
         return diff.q <= range && diff.r <= range;
     }
 
-    public static boolean isSurrounded(Board board, Coord coord) {
+    public static boolean isSurrounded(Board board, Coord coord, int amount) {
         int count = 0;
 
         for (Coord neighbor : coord.getNeighborCoords()) {
@@ -97,11 +97,15 @@ public class Move {
             }
         }
 
-        if (count >= 5) {
+        if (count >= amount) {
             return true;
         }
 
         return false;
+    }
+
+    public static boolean isSurrounded(Board board, Coord coord) {
+        return isSurrounded(board, coord, 5);
     }
 
 
