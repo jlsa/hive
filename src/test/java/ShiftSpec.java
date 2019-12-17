@@ -1,4 +1,4 @@
-import nl.josaho.stones.Move;
+import nl.josaho.movements.Move;
 import nl.hanze.hive.*;
 import nl.josaho.*;
 import org.junit.jupiter.api.*;
@@ -39,7 +39,6 @@ public class ShiftSpec {
         assertThrows(Hive.IllegalMove.class, () -> {
             board.moveStone(from, to);
         });
-//        assertFalse(Move.isValidMove(board, from, to));
     }
 
     // 6c

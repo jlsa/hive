@@ -1,7 +1,7 @@
 package nl.josaho;
 
 import nl.hanze.hive.Hive;
-import nl.josaho.stones.Move;
+import nl.josaho.movements.Move;
 
 import java.util.*;
 
@@ -137,8 +137,8 @@ public class Board {
             Field field = entry.getValue();
 
             if (field.hasStones()) {
-                Stone stone = field.peekStone(); // get the top stone
-                if (stone.getColor() == player.getPlayerColor()) { // or equals if needed
+                Stone stone = field.peekStone();
+                if (stone.getColor() == player.getPlayerColor()) {
                     if (Move.hasMovesLeft(this, coord)) {
                         return true; // quick exit
                     }

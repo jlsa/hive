@@ -1,6 +1,5 @@
 import nl.hanze.hive.*;
 import nl.josaho.*;
-import nl.josaho.stones.Move;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,7 +21,7 @@ public class GameSpec {
         Coord coord = new Coord(0, 0);
         game.play(Hive.Tile.BEETLE, coord.q, coord.r);
 
-        assertEquals(1, game.board.getFields().size()); // I feel this could lead to some errors..
+        assertEquals(1, game.board.getFields().size());
     }
 
     @Test
@@ -134,7 +133,6 @@ public class GameSpec {
         board.placeStone(new Coord(0, -4), new Stone(blackPlayer, Hive.Tile.SOLDIER_ANT));
 
         game.move(-2, -1, 0, -1);
-        System.out.println(Move.isSurrounded(board, new Coord(0, 0), 6));
         assertTrue(game.isDraw());
     }
 

@@ -3,7 +3,6 @@ import nl.josaho.*;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-// should be reworked into board spec
 public class FieldSpec {
     // 2b
     @Test

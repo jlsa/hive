@@ -1,17 +1,9 @@
 import nl.hanze.hive.Hive;
 import nl.josaho.*;
 import org.junit.jupiter.api.*;
-
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardSpec {
-    // 2a = moeilijk.
-    // hier zou 2a moeten komen.
-    // board.getField(coord) for infinite board test
-    // remember there can't be empty spots between. they always need to be connected.
-
     @Test
     void BoardShouldOnlyHaveEmptyFieldsWhenCreated() {
         Board board = new Board();

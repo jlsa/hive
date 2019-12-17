@@ -1,4 +1,4 @@
-package nl.josaho.stones;
+package nl.josaho.movements;
 
 import nl.josaho.Board;
 import nl.josaho.Coord;
