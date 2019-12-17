@@ -30,15 +30,6 @@ public class FieldSpec {
     }
 
     @Test
-    void FieldCanContainTileOnlyOnce() {
-        Stone stone = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
-        Field field = new Field();
-        field.addStone(stone);
-        field.addStone(stone);
-        assertArrayEquals(new Stone[] {stone}, field.getStones());
-    }
-
-    @Test
     void FieldHasTileThenTrue() {
         Stone stone = new Stone(Hive.Player.BLACK, Hive.Tile.BEETLE);
         Field field = new Field();

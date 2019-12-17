@@ -73,10 +73,12 @@ public class HiveGame implements Hive {
         if (!isStoneConnected(to)) {
             throw new IllegalMove("Your tile has to be attached to another tile");
         }
+        System.out.println("1");
         if (!playerHasPlayedQueen(currentPlayer)) {
             throw new IllegalMove("You first have to play the queen");
         }
 
+        System.out.println("2");
         Field field = board.get(from);
 
         if (field != null) {
@@ -90,17 +92,20 @@ public class HiveGame implements Hive {
             }
         }
 
+        System.out.println("3");
         try {
             board.moveStone(from, to);
         } catch (IllegalMove e) {
             throw e;
         }
 
+        System.out.println("4");
         if (!board.boardIsOneSwarm()) {
             board.moveStone(to, from);
             throw new IllegalMove("Not all stones are connected.");
         }
 
+        System.out.println("5");
         switchPlayer();
     }
 

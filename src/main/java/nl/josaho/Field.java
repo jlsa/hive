@@ -25,11 +25,8 @@ public class Field {
         return this.stones.size() > 0;
     }
 
-
     public void addStone(Stone stone) {
-        if (!this.stones.contains(stone)) {
-            this.stones.push(stone);
-        }
+        this.stones.push(stone);
     }
 
     public Stone popStone()

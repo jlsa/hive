@@ -46,4 +46,48 @@ public class BeetleMoveSpec {
 
         assertTrue(Move.isValidMove(board, from, to));
     }
+
+    @Test
+    void beetleGateFails() throws Hive.IllegalMove {
+        Board board = new Board();
+        Player white = new Player(Hive.Player.WHITE);
+        Player black = new Player(Hive.Player.BLACK);
+        HiveGame game = new HiveGame(white, black, board);
+
+        board.placeStone(new Coord(0, 0), new Stone(white, Hive.Tile.QUEEN_BEE));
+        board.placeStone(new Coord(-1, 0), new Stone(white, Hive.Tile.SPIDER));
+        board.placeStone(new Coord(-1, -1), new Stone(white, Hive.Tile.BEETLE));
+        board.placeStone(new Coord(0, -2), new Stone(black, Hive.Tile.SPIDER));
+        board.placeStone(new Coord(1, -2), new Stone(black, Hive.Tile.QUEEN_BEE));
+        board.placeStone(new Coord(1, -1), new Stone(black, Hive.Tile.SOLDIER_ANT));
+
+        assertThrows(Hive.IllegalMove.class, () -> {
+           game.move(-1, -1, 0, -1);
+        });
+    }
+
+    @Test
+    void beetleGateSuccess() throws Hive.IllegalMove {
+        Board board = new Board();
+        Player white = new Player(Hive.Player.WHITE);
+        Player black = new Player(Hive.Player.BLACK);
+        HiveGame game = new HiveGame(white, black, board);
+        Coord to = new Coord(0, -1);
+        Stone beetle = new Stone(white, Hive.Tile.BEETLE);
+
+        board.placeStone(new Coord(0, 0), new Stone(white, Hive.Tile.QUEEN_BEE));
+        board.placeStone(new Coord(-1, 0), new Stone(white, Hive.Tile.SPIDER));
+        board.placeStone(new Coord(-1, -1), new Stone(black, Hive.Tile.BEETLE));
+        board.placeStone(new Coord(-1, -1), beetle);
+        // still not able to add more of the same tile from same player on one stack.. crap
+
+        board.placeStone(new Coord(0, -2), new Stone(black, Hive.Tile.SPIDER));
+        board.placeStone(new Coord(1, -2), new Stone(black, Hive.Tile.QUEEN_BEE));
+        board.placeStone(new Coord(1, -1), new Stone(black, Hive.Tile.SOLDIER_ANT));
+
+        game.move(-1, -1, to.q, to.r);
+
+        assertEquals(beetle, board.get(to).peekStone());
+    }
+
 }
