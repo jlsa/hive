@@ -5,6 +5,7 @@ import nl.josaho.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Move {
@@ -108,6 +109,15 @@ public class Move {
         return isSurrounded(board, coord, 5);
     }
 
+    public static boolean hasMovesLeft(Board board, Coord from) {
+        for (Map.Entry<Coord, Field> entry : board.getFields().entrySet()) {
+            Coord to = entry.getKey();
 
+            if (Move.isValidMove(board, to, from)) {
+                return true;
+            }
+        }
 
+        return false;
+    }
 }

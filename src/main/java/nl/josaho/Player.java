@@ -55,10 +55,7 @@ public class Player {
     }
 
     public boolean canPass() {
-        if (stones.size() == 0) {
-            return true;
-        }
-        return false;
+        return stones.size() == 0;
     }
 
     public Stone playStone(Hive.Tile tile) {

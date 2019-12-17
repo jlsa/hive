@@ -84,26 +84,13 @@ public class Board {
         return false;
     }
 
-    public boolean canTileTypeBePlaced(Hive.Tile tile, Hive.Player player) {
-        int count = 0;
-        int maxCount = getTotalAmountOfTilesPossibleOnBoard(tile);
-        Stone stone = new Stone(player, tile);
-        for (Field f: fields.values()) {
-            if (f.containsStone(stone)) {
-                count++;
-            }
-        }
-        return count == maxCount;
-    }
-
     public boolean boardIsOneSwarm() {
         ArrayList<Coord> visited = new ArrayList<>();
         Coord start = null;
 
         for (Map.Entry<Coord, Field> entry : fields.entrySet()) {
-            Field field = entry.getValue();
             Coord coord = entry.getKey();
-            if (field.hasStones()) {
+            if (entry.getValue().hasStones()) {
                 start = coord;
                 break;
             }
@@ -142,5 +129,23 @@ public class Board {
             default: // should never arrive here
                 return -1;
         }
+    }
+
+    public boolean legalMovesLeft(Player player) {
+        for (Map.Entry<Coord, Field> entry : fields.entrySet()) {
+            Coord coord = entry.getKey();
+            Field field = entry.getValue();
+
+            if (field.hasStones()) {
+                Stone stone = field.peekStone(); // get the top stone
+                if (stone.getColor() == player.getPlayerColor()) { // or equals if needed
+                    if (Move.hasMovesLeft(this, coord)) {
+                        return true; // quick exit
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

@@ -112,8 +112,11 @@ public class HiveGame implements Hive {
      */
     @Override
     public void pass() throws IllegalMove {
-        if (!this.currentPlayer.canPass()) {
-            throw new IllegalMove();
+        // check if player can make a legal move
+        // then check if it has any stones left to play
+        // when both checks fail, pass turn to other player
+        if (!board.legalMovesLeft(currentPlayer) && !currentPlayer.canPass()) {
+            throw new IllegalMove("Can't pass.");
         }
 
         switchPlayer();
@@ -141,6 +144,10 @@ public class HiveGame implements Hive {
      */
     @Override
     public boolean isWinner(Player player) {
+        if (isQueenSurrounded(currentPlayer) && isQueenSurrounded(opponent)) {
+            return false;
+        }
+
         if (player == currentPlayer.getPlayerColor()) {
             return isQueenSurrounded(opponent);
         } else {
@@ -155,7 +162,7 @@ public class HiveGame implements Hive {
      */
     @Override
     public boolean isDraw() {
-        if (isWinner(Player.BLACK) && isWinner(Player.WHITE)) {
+        if (isQueenSurrounded(currentPlayer) && isQueenSurrounded(opponent)) {
             System.out.println("draw");
             return true;
         }

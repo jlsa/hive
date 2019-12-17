@@ -26,8 +26,8 @@ public class SoldierAntMove {
 
     public static void recursiveFindPathToDestination(Board board, ArrayList<Coord> visited, Coord from, Coord to) {
         for (Coord next : from.getNeighborCoords()) {
-            Field f = board.get(next);
-            if (f.hasStones()) {
+            Field field = board.get(next);
+            if (field.hasStones()) {
                 continue;
             }
             if (!visited.contains(next)) {
@@ -44,6 +44,4 @@ public class SoldierAntMove {
             }
         }
     }
-
-
 }
