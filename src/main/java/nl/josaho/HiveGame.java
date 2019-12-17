@@ -95,6 +95,7 @@ public class HiveGame implements Hive {
         } catch (IllegalMove e) {
             throw e;
         }
+
         if (!board.boardIsOneSwarm()) {
             board.moveStone(to, from);
             throw new IllegalMove("Not all stones are connected.");

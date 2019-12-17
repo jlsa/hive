@@ -120,7 +120,9 @@ public class Board {
 
             if (!visited.contains(c)) {
                 if (f.hasStones()) {
-                    visited.add(c);
+                    for (int i = 0; i < f.height(); i++) {
+                        visited.add(c);
+                    }
                     recursiveSearchConnectedStones(c, visited);
                 }
             }

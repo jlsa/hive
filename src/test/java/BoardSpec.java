@@ -35,7 +35,7 @@ public class BoardSpec {
     }
 
     @Test
-    void StonesCanStack() {
+    void StonesCanStack() throws Hive.IllegalMove {
         // need to edit field.popTile as it should be able to stack tiles.
         Board board = new Board();
         Coord coord = new Coord(0, 0);
@@ -55,6 +55,21 @@ public class BoardSpec {
         stones[2] = ant;
 
         assertArrayEquals(stones, board.get(coord).getStones());
+
+        Board b = new Board();
+        Player white = new Player(Hive.Player.WHITE);
+        Player black = new Player(Hive.Player.BLACK);
+
+        HiveGame game = new HiveGame(white, black, b);
+
+        game.play(Hive.Tile.QUEEN_BEE, 0, 0);
+        game.play(Hive.Tile.QUEEN_BEE, 0, 1);
+        game.play(Hive.Tile.BEETLE, 1, -1);
+        game.play(Hive.Tile.SOLDIER_ANT, -1, 2);
+        game.move(1, -1, 1, 0);
+        game.move(-1, 2, -1, 0);
+        game.move(1, 0, 0, 1);
+
     }
 
     @Test
